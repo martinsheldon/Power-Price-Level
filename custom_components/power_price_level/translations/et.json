@@ -1,0 +1,149 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Võrguhinna tase",
+        "data": {
+          "language": "Keel",
+          "language_auto": "Automaatselt",
+          "language_en": "Inglise",
+          "language_et": "Eesti",
+          "level_language": "Keel",
+          "level_language_auto": "Automaatselt",
+          "level_language_en": "Inglise",
+          "level_language_et": "Eesti",
+          "nordpool_entity": "Nordpool anduri üksus",
+          "sensor_name": "Anduri põhinimi",
+          "currency": "Valuuta",
+            "currency_NOK": "Norra kroon",
+            "currency_SEK": "Rootsi kroon",
+            "currency_DKK": "Taani kroon",
+            "currency_EUR": "Euro",
+          "grid_day": "Võrgu päevahind",
+          "grid_night": "Võrgu ööhind",
+          "additional": "Lisatasu",
+          "cheap_price": "Soodsa hinna lävi",
+          "night_hour_start": "Öö algab kell (tund)",
+          "night_hour_end": "Öö lõpeb kell (tund)",
+          "day_hour_end": "Päev lõpeb kell (tund)",
+          "cheap_hours": "Kõige soodsamad tunnid",
+          "expensive_hours": "Kõige kallimad tunnid",
+          "cheap_hours_night": "Soodsamad tunnid öösel",
+          "cheap_hours_day": "Soodsamad tunnid päeval",
+          "cheap_hours_evening": "Soodsamad tunnid õhtul"
+        }
+      },
+      "costs": {
+        "title": "Kulud",
+        "data": {
+          "grid_day": "Võrgu päevahind",
+          "grid_night": "Võrgu ööhind",
+          "additional": "Lisatasu",
+          "cheap_price": "Soodsa hinna lävi",
+          "night_hour_start": "Öö algab kell (tund)",
+          "night_hour_end": "Öö lõpeb kell (tund)"
+        }
+      },
+      "hours": {
+        "title": "Tunnid ja arvud",
+        "errors": {
+          "empty": "See väli on kohustuslik.",
+          "hour_end_out_of_range": "Tund peab olema vahemikus 0–24 (ei saa olla negatiivne).",
+          "must_be_greater_than_night": "Päeva lõpp peab olema hiljem kui öö.",
+          "sum_exceeds_24": "Kõige soodsamate ja kallimate tundide summa ei tohi ületada 24.",
+          "max_8": "See väärtus ei tohi ületada 8 tundi.",
+          "invalid_input": "Vigane sisend.",
+          "hour_range": "Tund peab olema vahemikus 0–24 (ei saa olla negatiivne)."
+        },
+        "data": {
+          "night_hour_start": "Öö algab kell (tund)",
+          "night_hour_end": "Öö lõpeb kell (tund)",
+          "day_hour_end": "Päev lõpeb kell (tund)",
+          "cheap_hours": "Kõige soodsamad tunnid",
+          "expensive_hours": "Kõige kallimad tunnid",
+          "cheap_hours_night": "Soodsamad tunnid öösel",
+          "cheap_hours_day": "Soodsamad tunnid päeval",
+          "cheap_hours_evening": "Soodsamad tunnid õhtul"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Võrguhinna tase – Seaded",
+        "data": {
+          "language": "Keel",
+          "language_auto": "Automaatselt",
+          "language_en": "Inglise",
+          "language_et": "Eesti",
+          "level_language": "Keel",
+          "level_language_auto": "Automaatselt",
+          "level_language_en": "Inglise",
+          "level_language_et": "Eesti",
+          "nordpool_entity": "Nordpool anduri üksus",
+          "sensor_name": "Anduri põhinimi",
+          "currency": "Valuuta",
+          "currency_NOK": "Norra kroon",
+          "grid_day": "Võrgu päevahind",
+          "grid_night": "Võrgu ööhind",
+          "additional": "Lisatasu",
+          "cheap_price": "Soodsa hinna lävi",
+          "night_hour_end": "Öö lõpeb kell (tund)",
+          "day_hour_end": "Päev lõpeb kell (tund)",
+          "cheap_hours": "Kõige soodsamad tunnid",
+          "expensive_hours": "Kõige kallimad tunnid",
+          "cheap_hours_night": "Soodsamad tunnid öösel",
+          "cheap_hours_day": "Soodsamad tunnid päeval",
+          "cheap_hours_evening": "Soodsamad tunnid õhtul"
+        }
+      },
+      "costs": {
+        "title": "Kulud",
+        "data": {
+          "grid_day": "Võrgu päevahind",
+          "grid_night": "Võrgu ööhind",
+          "additional": "Lisatasu",
+          "cheap_price": "Soodsa hinna lävi",
+          "night_hour_start": "Öö algab kell (tund)",
+          "night_hour_end": "Öö lõpeb kell (tund)"
+        }
+      },
+      "more": {
+        "title": "Tunnid ja arvud",
+        "errors": {
+          "empty": "See väli on kohustuslik.",
+          "hour_range": "Tund peab olema vahemikus 0–24.",
+          "must_be_greater_than_night": "Päeva lõpp peab olema hiljem kui öö.",
+          "sum_exceeds_24": "Kõige soodsamate ja kallimate tundide summa ei tohi ületada 24.",
+          "max_8": "See väärtus ei tohi ületada 8 tundi.",
+          "invalid_input": "Vigane sisend."
+        },
+        "data": {
+          "night_hour_end": "Öö lõpeb kell (tund)",
+          "day_hour_end": "Päev lõpeb kell (tund)",
+          "cheap_hours": "Kõige soodsamad tunnid",
+          "expensive_hours": "Kõige kallimad tunnid",
+          "cheap_hours_night": "Soodsamad tunnid öösel",
+          "cheap_hours_day": "Soodsamad tunnid päeval",
+          "cheap_hours_evening": "Soodsamad tunnid õhtul"
+        }
+      }
+    }
+  },
+  "sensor": {
+    "power_price_level": {
+      "state": {
+        "unavailable": "Pole saadaval",
+        "cheap": "Soodne",
+        "cheapest_hour": "Kõige odavam tund",
+        "cheapest_hours": "Kõige odavamad tunnid",
+        "cheap_time": "Soodne tund",
+        "most_expensive_hour": "Kalleim tund",
+        "most_expensive_hours": "Kalleimad tunnid",
+        "normal": "Tavaline",
+        "expensive": "Kallis"
+      }
+    }
+  }
+}

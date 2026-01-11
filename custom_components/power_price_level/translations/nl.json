@@ -1,0 +1,149 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Stroomprijsniveau",
+        "data": {
+          "language": "Taal",
+          "language_auto": "Automatisch",
+          "language_en": "Engels",
+          "language_nl": "Nederlands",
+          "level_language": "Taal",
+          "level_language_auto": "Automatisch",
+          "level_language_en": "Engels",
+          "level_language_nl": "Nederlands",
+          "nordpool_entity": "Nordpool sensor entiteit",
+          "sensor_name": "Sensor basisnaam",
+          "currency": "Valuta",
+          "currency_NOK": "Noorse kroon",
+          "currency_SEK": "Zweedse kroon",
+          "currency_DKK": "Deense kroon",
+          "currency_EUR": "Euro",
+          "grid_day": "Netwerk dagprijs",
+          "grid_night": "Netwerk nachttarief",
+          "additional": "Extra toeslag",
+          "cheap_price": "Drempel voor goedkope prijs",
+          "night_hour_start": "Nacht begint om (uur)",
+          "night_hour_end": "Nacht eindigt om (uur)",
+          "day_hour_end": "Dag eindigt om (uur)",
+          "cheap_hours": "Aantal goedkoopste uren",
+          "expensive_hours": "Aantal duurste uren",
+          "cheap_hours_night": "Goedkoopste uren 's nachts",
+          "cheap_hours_day": "Goedkoopste uren overdag",
+          "cheap_hours_evening": "Goedkoopste uren 's avonds"
+        }
+      },
+      "costs": {
+        "title": "Kosten",
+        "data": {
+          "grid_day": "Netwerk dagprijs",
+          "grid_night": "Netwerk nachttarief",
+          "additional": "Extra toeslag",
+          "cheap_price": "Drempel voor goedkope prijs",
+          "night_hour_start": "Nacht begint om (uur)",
+          "night_hour_end": "Nacht eindigt om (uur)"
+        }
+      },
+      "hours": {
+        "title": "Uren en aantallen",
+        "errors": {
+          "empty": "Dit veld is verplicht.",
+          "hour_end_out_of_range": "Uur moet tussen 0 en 24 zijn (mag niet negatief zijn).",
+          "must_be_greater_than_night": "Einde van de dag moet later zijn dan einde van de nacht.",
+          "sum_exceeds_24": "Som van goedkoopste en duurste uren mag niet groter zijn dan 24.",
+          "max_8": "Deze waarde mag niet groter zijn dan 8 uur.",
+          "invalid_input": "Ongeldige invoer.",
+          "hour_range": "Uur moet tussen 0 en 24 zijn (mag niet negatief zijn)."
+        },
+        "data": {
+          "night_hour_start": "Nacht begint om (uur)",
+          "night_hour_end": "Nacht eindigt om (uur)",
+          "day_hour_end": "Dag eindigt om (uur)",
+          "cheap_hours": "Aantal goedkoopste uren",
+          "expensive_hours": "Aantal duurste uren",
+          "cheap_hours_night": "Goedkoopste uren 's nachts",
+          "cheap_hours_day": "Goedkoopste uren overdag",
+          "cheap_hours_evening": "Goedkoopste uren 's avonds"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Stroomprijsniveau – Instellingen",
+        "data": {
+          "language": "Taal",
+          "language_auto": "Automatisch",
+          "language_en": "Engels",
+          "language_nl": "Nederlands",
+          "level_language": "Taal",
+          "level_language_auto": "Automatisch",
+          "level_language_en": "Engels",
+          "level_language_nl": "Nederlands",
+          "nordpool_entity": "Nordpool sensor entiteit",
+          "sensor_name": "Sensor basisnaam",
+          "currency": "Valuta",
+          "currency_NOK": "Noorse kroon",
+          "grid_day": "Netwerk dagprijs",
+          "grid_night": "Netwerk nachttarief",
+          "additional": "Extra toeslag",
+          "cheap_price": "Drempel voor goedkope prijs",
+          "night_hour_end": "Nacht eindigt om (uur)",
+          "day_hour_end": "Dag eindigt om (uur)",
+          "cheap_hours": "Aantal goedkoopste uren",
+          "expensive_hours": "Aantal duurste uren",
+          "cheap_hours_night": "Goedkoopste uren 's nachts",
+          "cheap_hours_day": "Goedkoopste uren overdag",
+          "cheap_hours_evening": "Goedkoopste uren 's avonds"
+        }
+      },
+      "costs": {
+        "title": "Kosten",
+        "data": {
+          "grid_day": "Netwerk dagprijs",
+          "grid_night": "Netwerk nachttarief",
+          "additional": "Extra toeslag",
+          "cheap_price": "Drempel voor goedkope prijs",
+          "night_hour_start": "Nacht begint om (uur)",
+          "night_hour_end": "Nacht eindigt om (uur)"
+        }
+      },
+      "more": {
+        "title": "Uren en aantallen",
+        "errors": {
+          "empty": "Dit veld is verplicht.",
+          "hour_range": "Uur moet tussen 0 en 24 zijn.",
+          "must_be_greater_than_night": "Einde van de dag moet later zijn dan einde van de nacht.",
+          "sum_exceeds_24": "Som van goedkoopste en duurste uren mag niet groter zijn dan 24.",
+          "max_8": "Deze waarde mag niet groter zijn dan 8 uur.",
+          "invalid_input": "Ongeldige invoer."
+        },
+        "data": {
+          "night_hour_end": "Nacht eindigt om (uur)",
+          "day_hour_end": "Dag eindigt om (uur)",
+          "cheap_hours": "Aantal goedkoopste uren",
+          "expensive_hours": "Aantal duurste uren",
+          "cheap_hours_night": "Goedkoopste uren 's nachts",
+          "cheap_hours_day": "Goedkoopste uren overdag",
+          "cheap_hours_evening": "Goedkoopste uren 's avonds"
+        }
+      }
+    }
+  },
+  "sensor": {
+    "power_price_level": {
+      "state": {
+        "unavailable": "Niet beschikbaar",
+        "cheap": "Goedkoop",
+        "cheapest_hour": "Goedkoopste uur",
+        "cheapest_hours": "Goedkoopste uren",
+        "cheap_time": "Goedkoop uur",
+        "most_expensive_hour": "Duurste uur",
+        "most_expensive_hours": "Duurste uren",
+        "normal": "Normaal",
+        "expensive": "Duur"
+      }
+    }
+  }
+}

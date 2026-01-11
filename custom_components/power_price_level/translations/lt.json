@@ -1,0 +1,147 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Energijos kainų lygis",
+        "data": {
+          "language": "Kalba",
+          "language_auto": "Automatiškai",
+          "language_en": "Anglų",
+          "language_lt": "Lietuvių",
+          "level_language": "Kalba",
+          "level_language_auto": "Automatiškai",
+          "level_language_en": "Anglų",
+          "level_language_lt": "Lietuvių",
+          "nordpool_entity": "Nordpool jutiklio vienetas",
+          "sensor_name": "Jutiklio pagrindinis pavadinimas",
+          "currency": "Valiuta",
+          "currency_NOK": "Norvegijos krona",
+          "currency_SEK": "Švedijos krona",
+          "currency_DKK": "Danijos krona",
+          "currency_EUR": "Euras",
+          "grid_day": "Tinklo dienos kaina",
+          "grid_night": "Tinklo nakties kaina",
+          "additional": "Papildoma kaina",
+          "cheap_price": "Pigi kaina riba",
+          "night_hour_start": "Naktis prasideda val. (valanda)",
+          "night_hour_end": "Naktis baigiasi val. (valanda)",
+          "day_hour_end": "Diena baigiasi val. (valanda)",
+          "cheap_hours": "Pigiausios valandos",
+          "expensive_hours": "Brangiausios valandos",
+          "cheap_hours_night": "Pigiausios valandos naktį",
+          "cheap_hours_day": "Pigiausios valandos dieną",
+          "cheap_hours_evening": "Pigiausios valandos vakare"
+        }
+      },
+      "costs": {
+        "title": "Išlaidos",
+        "data": {
+          "grid_day": "Tinklo dienos kaina",
+          "grid_night": "Tinklo nakties kaina",
+          "additional": "Papildoma kaina",
+          "cheap_price": "Pigi kaina riba",
+          "night_hour_start": "Naktis prasideda val. (valanda)",
+          "night_hour_end": "Naktis baigiasi val. (valanda)"
+        }
+      },
+      "hours": {
+        "title": "Valandos ir skaičiai",
+        "errors": {
+          "empty": "Šis laukas privalomas.",
+          "hour_end_out_of_range": "Valanda turi būti intervale 0–24 (negali būti neigiamas).",
+          "must_be_greater_than_night": "Dienos pabaiga turi būti vėlesnė nei naktis.",
+          "sum_exceeds_24": "Pigiausių ir brangiausių valandų suma negali viršyti 24.",
+          "max_8": "Ši reikšmė negali viršyti 8 valandų.",
+          "invalid_input": "Neteisingas įvestis.",
+          "hour_range": "Valanda turi būti intervale 0–24 (negali būti neigiamas)."
+        },
+        "data": {
+          "night_hour_start": "Naktis prasideda val. (valanda)",
+          "night_hour_end": "Naktis baigiasi val. (valanda)",
+          "day_hour_end": "Diena baigiasi val. (valanda)",
+          "cheap_hours": "Pigiausios valandos",
+          "expensive_hours": "Brangiausios valandos",
+          "cheap_hours_night": "Pigiausios valandos naktį",
+          "cheap_hours_day": "Pigiausios valandos dieną",
+          "cheap_hours_evening": "Pigiausios valandos vakare"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Energijos kainų lygis – Nustatymai",
+        "data": {
+          "language": "Kalba",
+          "language_auto": "Automatiškai",
+          "language_en": "Anglų",
+          "language_lt": "Lietuvių",
+          "level_language": "Kalba",
+          "level_language_auto": "Automatiškai",
+          "level_language_en": "Anglų",
+          "level_language_lt": "Lietuvių",
+          "nordpool_entity": "Nordpool jutiklio vienetas",
+          "sensor_name": "Jutiklio pagrindinis pavadinimas",
+          "currency": "Valiuta",
+          "currency_NOK": "Norvegijos krona",
+          "grid_day": "Tinklo dienos kaina",
+          "grid_night": "Tinklo nakties kaina",
+          "additional": "Papildoma kaina",
+          "cheap_price": "Pigi kaina riba",
+          "night_hour_end": "Naktis baigiasi val. (valanda)",
+          "day_hour_end": "Diena baigiasi val. (valanda)",
+          "cheap_hours": "Pigiausios valandos",
+          "expensive_hours": "Brangiausios valandos",
+          "cheap_hours_night": "Pigiausios valandos naktį",
+          "cheap_hours_day": "Pigiausios valandos dieną",
+          "cheap_hours_evening": "Pigiausios valandos vakare"
+        }
+      },
+      "costs": {
+        "title": "Išlaidos",
+        "data": {
+          "grid_day": "Tinklo dienos kaina",
+          "grid_night": "Tinklo nakties kaina",
+          "additional": "Papildoma kaina",
+          "cheap_price": "Pigi kaina riba"
+        }
+      },
+      "more": {
+        "title": "Valandos ir skaičiai",
+        "errors": {
+          "empty": "Šis laukas privalomas.",
+          "hour_range": "Valanda turi būti intervale 0–24.",
+          "must_be_greater_than_night": "Dienos pabaiga turi būti vėlesnė nei naktis.",
+          "sum_exceeds_24": "Pigiausių ir brangiausių valandų suma negali viršyti 24.",
+          "max_8": "Ši reikšmė negali viršyti 8 valandų.",
+          "invalid_input": "Neteisingas įvestis."
+        },
+        "data": {
+          "night_hour_end": "Naktis baigiasi val. (valanda)",
+          "day_hour_end": "Diena baigiasi val. (valanda)",
+          "cheap_hours": "Pigiausios valandos",
+          "expensive_hours": "Brangiausios valandos",
+          "cheap_hours_night": "Pigiausios valandos naktį",
+          "cheap_hours_day": "Pigiausios valandos dieną",
+          "cheap_hours_evening": "Pigiausios valandos vakare"
+        }
+      }
+    }
+  },
+  "sensor": {
+    "power_price_level": {
+      "state": {
+        "unavailable": "Nėra prieinama",
+        "cheap": "Pigu",
+        "cheapest_hour": "Pigiausia valanda",
+        "cheapest_hours": "Pigiausios valandos",
+        "cheap_time": "Pigi valanda",
+        "most_expensive_hour": "Brangiausia valanda",
+        "most_expensive_hours": "Brangiausios valandos",
+        "normal": "Įprasta",
+        "expensive": "Brangu"
+      }
+    }
+  }
+}

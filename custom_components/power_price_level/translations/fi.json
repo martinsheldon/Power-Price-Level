@@ -1,0 +1,149 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Sähköhinnan taso",
+        "data": {
+          "language": "Kieli",
+          "language_auto": "Automaattinen",
+          "language_en": "Englanti",
+          "language_fi": "Suomi",
+          "level_language": "Kieli",
+          "level_language_auto": "Automaattinen",
+          "level_language_en": "Englanti",
+          "level_language_fi": "Suomi",
+          "nordpool_entity": "Nordpool-anturin yksikkö",
+          "sensor_name": "Anturin perusnimi",
+          "currency": "Valuutta",
+          "currency_NOK": "Norjan kruunu",
+          "currency_SEK": "Ruotsin kruunu",
+          "currency_DKK": "Tanskan kruunu",
+          "currency_EUR": "Euro",
+          "grid_day": "Verkon päivä hinta",
+          "grid_night": "Verkon yö hinta",
+          "additional": "Lisämaksu",
+          "cheap_price": "Halvan hinnan kynnys",
+          "night_hour_start": "Yö alkaa klo (tunti)",
+          "night_hour_end": "Yö päättyy klo (tunti)",
+          "day_hour_end": "Päivä päättyy klo (tunti)",
+          "cheap_hours": "Halvimmat tunnit",
+          "expensive_hours": "Kalleimmat tunnit",
+          "cheap_hours_night": "Halvimmat tunnit yöllä",
+          "cheap_hours_day": "Halvimmat tunnit päivällä",
+          "cheap_hours_evening": "Halvimmat tunnit illalla"
+        }
+      },
+      "costs": {
+        "title": "Kulut",
+        "data": {
+          "grid_day": "Verkon päivä hinta",
+          "grid_night": "Verkon yö hinta",
+          "additional": "Lisämaksu",
+          "cheap_price": "Halvan hinnan kynnys",
+          "night_hour_start": "Yö alkaa klo (tunti)",
+          "night_hour_end": "Yö päättyy klo (tunti)"
+        }
+      },
+      "hours": {
+        "title": "Tunnit ja määrät",
+        "errors": {
+          "empty": "Tämä kenttä on pakollinen.",
+          "hour_end_out_of_range": "Tunnin on oltava välillä 0–24 (ei voi olla negatiivinen).",
+          "must_be_greater_than_night": "Päivän loppumisen on oltava myöhäisempi kuin yön.",
+          "sum_exceeds_24": "Halvimpien ja kalleimpien tuntien summa ei saa ylittää 24.",
+          "max_8": "Tämän arvon ei saa ylittää 8 tuntia.",
+          "invalid_input": "Virheellinen syöte.",
+          "hour_range": "Tunnin on oltava välillä 0–24 (ei voi olla negatiivinen)."
+        },
+        "data": {
+          "night_hour_start": "Yö alkaa klo (tunti)",
+          "night_hour_end": "Yö päättyy klo (tunti)",
+          "day_hour_end": "Päivä päättyy klo (tunti)",
+          "cheap_hours": "Halvimmat tunnit",
+          "expensive_hours": "Kalleimmat tunnit",
+          "cheap_hours_night": "Halvimmat tunnit yöllä",
+          "cheap_hours_day": "Halvimmat tunnit päivällä",
+          "cheap_hours_evening": "Halvimmat tunnit illalla"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Sähköhinnan taso – Asetukset",
+        "data": {
+          "language": "Kieli",
+          "language_auto": "Automaattinen",
+          "language_en": "Englanti",
+          "language_fi": "Suomi",
+          "level_language": "Kieli",
+          "level_language_auto": "Automaattinen",
+          "level_language_en": "Englanti",
+          "level_language_fi": "Suomi",
+          "nordpool_entity": "Nordpool-anturin yksikkö",
+          "sensor_name": "Anturin perusnimi",
+          "currency": "Valuutta",
+          "currency_NOK": "Norjan kruunu",
+          "grid_day": "Verkon päivä hinta",
+          "grid_night": "Verkon yö hinta",
+          "additional": "Lisämaksu",
+          "cheap_price": "Halvan hinnan kynnys",
+          "night_hour_end": "Yö päättyy klo (tunti)",
+          "day_hour_end": "Päivä päättyy klo (tunti)",
+          "cheap_hours": "Halvimmat tunnit",
+          "expensive_hours": "Kalleimmat tunnit",
+          "cheap_hours_night": "Halvimmat tunnit yöllä",
+          "cheap_hours_day": "Halvimmat tunnit päivällä",
+          "cheap_hours_evening": "Halvimmat tunnit illalla"
+        }
+      },
+      "costs": {
+        "title": "Kulut",
+        "data": {
+          "grid_day": "Verkon päivä hinta",
+          "grid_night": "Verkon yö hinta",
+          "additional": "Lisämaksu",
+          "cheap_price": "Halvan hinnan kynnys",
+          "night_hour_start": "Yö alkaa klo (tunti)",
+          "night_hour_end": "Yö päättyy klo (tunti)"
+        }
+      },
+      "more": {
+        "title": "Tunnit ja määrät",
+        "errors": {
+          "empty": "Tämä kenttä on pakollinen.",
+          "hour_range": "Tunnin on oltava välillä 0–24.",
+          "must_be_greater_than_night": "Päivän loppumisen on oltava myöhäisempi kuin yön.",
+          "sum_exceeds_24": "Halvimpien ja kalleimpien tuntien summa ei saa ylittää 24.",
+          "max_8": "Tämän arvon ei saa ylittää 8 tuntia.",
+          "invalid_input": "Virheellinen syöte."
+        },
+        "data": {
+          "night_hour_end": "Yö päättyy klo (tunti)",
+          "day_hour_end": "Päivä päättyy klo (tunti)",
+          "cheap_hours": "Halvimmat tunnit",
+          "expensive_hours": "Kalleimmat tunnit",
+          "cheap_hours_night": "Halvimmat tunnit yöllä",
+          "cheap_hours_day": "Halvimmat tunnit päivällä",
+          "cheap_hours_evening": "Halvimmat tunnit illalla"
+        }
+      }
+    }
+  },
+  "sensor": {
+    "power_price_level": {
+      "state": {
+        "unavailable": "Ei saatavilla",
+        "cheap": "Edullinen",
+        "cheapest_hour": "Halvin tunti",
+        "cheapest_hours": "Edullisimmat tunnit",
+        "cheap_time": "Edullinen tunti",
+        "most_expensive_hour": "Kallein tunti",
+        "most_expensive_hours": "Kalleimmat tunnit",
+        "normal": "Normaali",
+        "expensive": "Kallis"
+      }
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Poziom ceny energii",
+        "data": {
+          "language": "Język",
+          "language_auto": "Automatycznie",
+          "language_en": "Angielski",
+          "language_pl": "Polski",
+          "level_language": "Język",
+          "level_language_auto": "Automatycznie",
+          "level_language_en": "Angielski",
+          "level_language_pl": "Polski",
+          "nordpool_entity": "Jednostka sensora Nordpool",
+          "sensor_name": "Podstawowa nazwa sensora",
+          "currency": "Waluta",
+          "currency_NOK": "Korona norweska",
+          "currency_SEK": "Korona szwedzka",
+          "currency_DKK": "Korona duńska",
+          "currency_EUR": "Euro",
+          "grid_day": "Cena sieci dzienna",
+          "grid_night": "Cena sieci nocna",
+          "additional": "Dodatkowa opłata",
+          "cheap_price": "Próg taniej ceny",
+          "night_hour_start": "Noc zaczyna się o (godzina)",
+          "night_hour_end": "Noc kończy się o (godzina)",
+          "day_hour_end": "Dzień kończy się o (godzina)",
+          "cheap_hours": "Liczba najtańszych godzin",
+          "expensive_hours": "Liczba najdroższych godzin",
+          "cheap_hours_night": "Najtańsze godziny w nocy",
+          "cheap_hours_day": "Najtańsze godziny w ciągu dnia",
+          "cheap_hours_evening": "Najtańsze godziny wieczorem"
+        }
+      },
+      "costs": {
+        "title": "Koszty",
+        "data": {
+          "grid_day": "Cena sieci dzienna",
+          "grid_night": "Cena sieci nocna",
+          "additional": "Dodatkowa opłata",
+          "cheap_price": "Próg taniej ceny",
+          "night_hour_start": "Noc zaczyna się o (godzina)",
+          "night_hour_end": "Noc kończy się o (godzina)"
+        }
+      },
+      "hours": {
+        "title": "Godziny i liczby",
+        "errors": {
+          "empty": "To pole jest wymagane.",
+          "hour_end_out_of_range": "Godzina musi być w zakresie 0–24 (nie może być ujemna).",
+          "must_be_greater_than_night": "Koniec dnia musi być późniejszy niż koniec nocy.",
+          "sum_exceeds_24": "Suma najtańszych i najdroższych godzin nie może przekraczać 24.",
+          "max_8": "Ta wartość nie może przekraczać 8 godzin.",
+          "invalid_input": "Nieprawidłowe dane wejściowe.",
+          "hour_range": "Godzina musi być w zakresie 0–24 (nie może być ujemna)."
+        },
+        "data": {
+          "night_hour_start": "Noc zaczyna się o (godzina)",
+          "night_hour_end": "Noc kończy się o (godzina)",
+          "day_hour_end": "Dzień kończy się o (godzina)",
+          "cheap_hours": "Liczba najtańszych godzin",
+          "expensive_hours": "Liczba najdroższych godzin",
+          "cheap_hours_night": "Najtańsze godziny w nocy",
+          "cheap_hours_day": "Najtańsze godziny w ciągu dnia",
+          "cheap_hours_evening": "Najtańsze godziny wieczorem"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Poziom ceny energii – Ustawienia",
+        "data": {
+          "language": "Język",
+          "language_auto": "Automatycznie",
+          "language_en": "Angielski",
+          "language_pl": "Polski",
+          "level_language": "Język",
+          "level_language_auto": "Automatycznie",
+          "level_language_en": "Angielski",
+          "level_language_pl": "Polski",
+          "nordpool_entity": "Jednostka sensora Nordpool",
+          "sensor_name": "Podstawowa nazwa sensora",
+          "currency": "Waluta",
+          "currency_NOK": "Korona norweska",
+          "grid_day": "Cena sieci dzienna",
+          "grid_night": "Cena sieci nocna",
+          "additional": "Dodatkowa opłata",
+          "cheap_price": "Próg taniej ceny",
+          "night_hour_end": "Noc kończy się o (godzina)",
+          "day_hour_end": "Dzień kończy się o (godzina)",
+          "cheap_hours": "Liczba najtańszych godzin",
+          "expensive_hours": "Liczba najdroższych godzin",
+          "cheap_hours_night": "Najtańsze godziny w nocy",
+          "cheap_hours_day": "Najtańsze godziny w ciągu dnia",
+          "cheap_hours_evening": "Najtańsze godziny wieczorem"
+        }
+      },
+      "costs": {
+        "title": "Koszty",
+        "data": {
+          "grid_day": "Cena sieci dzienna",
+          "grid_night": "Cena sieci nocna",
+          "additional": "Dodatkowa opłata",
+          "cheap_price": "Próg taniej ceny",
+          "night_hour_start": "Noc zaczyna się o (godzina)",
+          "night_hour_end": "Noc kończy się o (godzina)"
+        }
+      },
+      "more": {
+        "title": "Godziny i liczby",
+        "errors": {
+          "empty": "To pole jest wymagane.",
+          "hour_range": "Godzina musi być w zakresie 0–24.",
+          "must_be_greater_than_night": "Koniec dnia musi być późniejszy niż koniec nocy.",
+          "sum_exceeds_24": "Suma najtańszych i najdroższych godzin nie może przekraczać 24.",
+          "max_8": "Ta wartość nie może przekraczać 8 godzin.",
+          "invalid_input": "Nieprawidłowe dane wejściowe."
+        },
+        "data": {
+          "night_hour_end": "Noc kończy się o (godzina)",
+          "day_hour_end": "Dzień kończy się o (godzina)",
+          "cheap_hours": "Liczba najtańszych godzin",
+          "expensive_hours": "Liczba najdroższych godzin",
+          "cheap_hours_night": "Najtańsze godziny w nocy",
+          "cheap_hours_day": "Najtańsze godziny w ciągu dnia",
+          "cheap_hours_evening": "Najtańsze godziny wieczorem"
+        }
+      }
+    }
+  },
+  "sensor": {
+    "power_price_level": {
+      "state": {
+        "unavailable": "Niedostępne",
+        "cheap": "Tanie",
+        "cheapest_hour": "Najtańsza godzina",
+        "cheapest_hours": "Najtańsze godziny",
+        "cheap_time": "Tania godzina",
+        "most_expensive_hour": "Najdroższa godzina",
+        "most_expensive_hours": "Najdroższe godziny",
+        "normal": "Normalna",
+        "expensive": "Drogie"
+      }
+    }
+  }
+}

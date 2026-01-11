@@ -1,0 +1,150 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Strømprisniveau",
+        "data": {
+          "language": "Sprog",
+          "language_auto": "Automatisk",
+          "language_en": "Engelsk",
+          "language_da": "Dansk",
+          "level_language": "Sprog",
+          "level_language_auto": "Automatisk",
+          "level_language_en": "Engelsk",
+          "level_language_da": "Dansk",
+          "nordpool_entity": "Nordpool sensor enhed",
+          "sensor_name": "Sensorens basisnavn",
+          "currency": "Valuta",
+          "currency_NOK": "Norske kroner",
+          "currency_SEK": "Svenske kroner",
+          "currency_DKK": "Danske kroner",
+          "currency_EUR": "Euro",
+          "grid_day": "Net dagpris",
+          "grid_night": "Net natpris",
+          "additional": "Tillæg",
+          "cheap_price": "Grænse for billig pris",
+          "night_hour_start": "Natten starter kl. (time)",
+          "night_hour_end": "Natten slutter kl. (time)",
+          "day_hour_end": "Dagen slutter kl. (time)",
+          "cheap_hours": "Antal billigste timer",
+          "expensive_hours": "Antal dyreste timer",
+          "cheap_hours_night": "Billigste timer om natten",
+          "cheap_hours_day": "Billigste timer om dagen",
+          "cheap_hours_evening": "Billigste timer om aftenen"
+        }
+      },
+      "costs": {
+        "title": "Omkostninger",
+        "data": {
+          "grid_day": "Net dagpris",
+          "grid_night": "Net natpris",
+          "additional": "Tillæg",
+          "cheap_price": "Grænse for billig pris",
+          "night_hour_start": "Natten starter kl. (time)",
+          "night_hour_end": "Natten slutter kl. (time)"
+        }
+      },
+      "hours": {
+        "title": "Timer og antal",
+        "errors": {
+          "empty": "Dette felt er påkrævet.",
+          "hour_end_out_of_range": "Time skal være mellem 0 og 24 (kan ikke være negativ).",
+          "must_be_greater_than_night": "Dagens slut skal være senere end nattens slut.",
+          "sum_exceeds_24": "Summen af billigste og dyreste timer må ikke være mere end 24.",
+          "max_8": "Denne værdi må ikke overstige 8 timer.",
+          "invalid_input": "Ugyldigt input.",
+          "hour_range": "Time skal være mellem 0 og 24."
+        },
+        "data": {
+          "night_hour_start": "Natten starter kl. (time)",
+          "night_hour_end": "Natten slutter kl. (time)",
+          "day_hour_end": "Dagen slutter kl. (time)",
+          "cheap_hours": "Antal billigste timer",
+          "expensive_hours": "Antal dyreste timer",
+          "cheap_hours_night": "Billigste timer om natten",
+          "cheap_hours_day": "Billigste timer om dagen",
+          "cheap_hours_evening": "Billigste timer om aftenen"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Strømprisniveau – Indstillinger",
+        "data": {
+          "language": "Sprog",
+          "language_auto": "Automatisk",
+          "language_en": "Engelsk",
+          "language_da": "Dansk",
+          "level_language": "Sprog",
+          "level_language_auto": "Automatisk",
+          "level_language_en": "Engelsk",
+          "level_language_da": "Dansk",
+          "nordpool_entity": "Nordpool sensor enhed",
+          "sensor_name": "Sensorens basisnavn",
+          "currency": "Valuta",
+          "currency_NOK": "Norske kroner",
+          "grid_day": "Net dagpris",
+          "grid_night": "Net natpris",
+          "additional": "Tillæg",
+          "cheap_price": "Grænse for billig pris",
+          "night_hour_end": "Natten slutter kl. (time)",
+          "day_hour_end": "Dagen slutter kl. (time)",
+          "cheap_hours": "Antal billigste timer",
+          "expensive_hours": "Antal dyreste timer",
+          "cheap_hours_night": "Billigste timer om natten",
+          "cheap_hours_day": "Billigste timer om dagen",
+          "cheap_hours_evening": "Billigste timer om aftenen"
+        }
+      },
+      "costs": {
+        "title": "Omkostninger",
+        "data": {
+          "grid_day": "Net dagpris",
+          "grid_night": "Net natpris",
+          "additional": "Tillæg",
+          "cheap_price": "Grænse for billig pris",
+          "night_hour_start": "Natten starter kl. (time)",
+          "night_hour_end": "Natten slutter kl. (time)"
+        }
+      },
+      "more": {
+        "title": "Timer og antal",
+        "errors": {
+          "empty": "Dette felt er påkrævet.",
+          "hour_range": "Time skal være mellem 0 og 24 (kan ikke være negativ).",
+          "must_be_greater_than_night": "Dagens slut skal være senere end nattens slut.",
+          "sum_exceeds_24": "Summen af billigste og dyreste timer må ikke være mere end 24.",
+          "max_8": "Denne værdi må ikke overstige 8 timer.",
+          "invalid_input": "Ugyldigt input."
+        },
+        "data": {
+          "night_hour_start": "Natten starter kl. (time)",
+          "night_hour_end": "Natten slutter kl. (time)",
+          "day_hour_end": "Dagen slutter kl. (time)",
+          "cheap_hours": "Antal billigste timer",
+          "expensive_hours": "Antal dyreste timer",
+          "cheap_hours_night": "Billigste timer om natten",
+          "cheap_hours_day": "Billigste timer om dagen",
+          "cheap_hours_evening": "Billigste timer om aftenen"
+        }
+      }
+    }
+  },
+  "sensor": {
+    "power_price_level": {
+      "state": {
+        "unavailable": "Utilgængelig",
+        "cheap": "Billig",
+        "cheapest_hour": "Billigste time",
+        "cheapest_hours": "Billigste timer",
+        "cheap_time": "Billig time",
+        "most_expensive_hour": "Dyreste time",
+        "most_expensive_hours": "Dyreste timer",
+        "normal": "Normal",
+        "expensive": "Dyrt"
+      }
+    }
+  }
+}

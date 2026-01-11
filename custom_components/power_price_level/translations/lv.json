@@ -1,0 +1,147 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Enerģijas cenas līmenis",
+        "data": {
+          "language": "Valoda",
+          "language_auto": "Automātiski",
+          "language_en": "Angļu",
+          "language_lv": "Latviešu",
+          "level_language": "Valoda",
+          "level_language_auto": "Automātiski",
+          "level_language_en": "Angļu",
+          "level_language_lv": "Latviešu",
+          "nordpool_entity": "Nordpool sensora vienība",
+          "sensor_name": "Sensora pamatnosaukums",
+          "currency": "Valūta",
+          "currency_NOK": "Norvēģijas krona",
+          "currency_SEK": "Zviedrijas krona",
+          "currency_DKK": "Dāņu krona",
+          "currency_EUR": "Eiro",
+          "grid_day": "Tīkla dienas cena",
+          "grid_night": "Tīkla nakts cena",
+          "additional": "Papildu maksa",
+          "cheap_price": "Lētās cenas slieksnis",
+          "night_hour_start": "Nakts sākas plkst. (stunda)",
+          "night_hour_end": "Nakts beidzas plkst. (stunda)",
+          "day_hour_end": "Diena beidzas plkst. (stunda)",
+          "cheap_hours": "Lētāko stundu skaits",
+          "expensive_hours": "Dārgāko stundu skaits",
+          "cheap_hours_night": "Lētākās stundas naktī",
+          "cheap_hours_day": "Lētākās stundas dienā",
+          "cheap_hours_evening": "Lētākās stundas vakarā"
+        }
+      },
+      "costs": {
+        "title": "Izmaksas",
+        "data": {
+          "grid_day": "Tīkla dienas cena",
+          "grid_night": "Tīkla nakts cena",
+          "additional": "Papildu maksa",
+          "cheap_price": "Lētās cenas slieksnis",
+          "night_hour_start": "Nakts sākas plkst. (stunda)",
+          "night_hour_end": "Nakts beidzas plkst. (stunda)"
+        }
+      },
+      "hours": {
+        "title": "Stundas un skaitļi",
+        "errors": {
+          "empty": "Šis lauks ir obligāts.",
+          "hour_end_out_of_range": "Stundai jābūt diapazonā 0–24 (nedrīkst būt negatīvs).",
+          "must_be_greater_than_night": "Dienas beiga jābūt vēlāk nekā nakts.",
+          "sum_exceeds_24": "Lētāko un dārgāko stundu summa nedrīkst pārsniegt 24.",
+          "max_8": "Šī vērtība nedrīkst pārsniegt 8 stundas.",
+          "invalid_input": "Nederīga ievade.",
+          "hour_range": "Stundai jābūt diapazonā 0–24."
+        },
+        "data": {
+          "night_hour_start": "Nakts sākas plkst. (stunda)",
+          "night_hour_end": "Nakts beidzas plkst. (stunda)",
+          "day_hour_end": "Diena beidzas plkst. (stunda)",
+          "cheap_hours": "Lētāko stundu skaits",
+          "expensive_hours": "Dārgāko stundu skaits",
+          "cheap_hours_night": "Lētākās stundas naktī",
+          "cheap_hours_day": "Lētākās stundas dienā",
+          "cheap_hours_evening": "Lētākās stundas vakarā"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Enerģijas cenas līmenis – Iestatījumi",
+        "data": {
+          "language": "Valoda",
+          "language_auto": "Automātiski",
+          "language_en": "Angļu",
+          "language_lv": "Latviešu",
+          "level_language": "Valoda",
+          "level_language_auto": "Automātiski",
+          "level_language_en": "Angļu",
+          "level_language_lv": "Latviešu",
+          "nordpool_entity": "Nordpool sensora vienība",
+          "sensor_name": "Sensora pamatnosaukums",
+          "currency": "Valūta",
+          "currency_NOK": "Norvēģijas krona",
+          "grid_day": "Tīkla dienas cena",
+          "grid_night": "Tīkla nakts cena",
+          "additional": "Papildu maksa",
+          "cheap_price": "Lētās cenas slieksnis",
+          "night_hour_end": "Nakts beidzas plkst. (stunda)",
+          "day_hour_end": "Diena beidzas plkst. (stunda)",
+          "cheap_hours": "Lētāko stundu skaits",
+          "expensive_hours": "Dārgāko stundu skaits",
+          "cheap_hours_night": "Lētākās stundas naktī",
+          "cheap_hours_day": "Lētākās stundas dienā",
+          "cheap_hours_evening": "Lētākās stundas vakarā"
+        }
+      },
+      "costs": {
+        "title": "Izmaksas",
+        "data": {
+          "grid_day": "Tīkla dienas cena",
+          "grid_night": "Tīkla nakts cena",
+          "additional": "Papildu maksa",
+          "cheap_price": "Lētās cenas slieksnis"
+        }
+      },
+      "more": {
+        "title": "Stundas un skaitļi",
+        "errors": {
+          "empty": "Šis lauks ir obligāts.",
+          "hour_range": "Stundai jābūt diapazonā 0–24 (nedrīkst būt negatīvs).",
+          "must_be_greater_than_night": "Dienas beiga jābūt vēlāk nekā nakts.",
+          "sum_exceeds_24": "Lētāko un dārgāko stundu summa nedrīkst pārsniegt 24.",
+          "max_8": "Šī vērtība nedrīkst pārsniegt 8 stundas.",
+          "invalid_input": "Nederīga ievade."
+        },
+        "data": {
+          "night_hour_end": "Nakts beidzas plkst. (stunda)",
+          "day_hour_end": "Diena beidzas plkst. (stunda)",
+          "cheap_hours": "Lētāko stundu skaits",
+          "expensive_hours": "Dārgāko stundu skaits",
+          "cheap_hours_night": "Lētākās stundas naktī",
+          "cheap_hours_day": "Lētākās stundas dienā",
+          "cheap_hours_evening": "Lētākās stundas vakarā"
+        }
+      }
+    }
+  },
+  "sensor": {
+    "power_price_level": {
+      "state": {
+        "unavailable": "Nav pieejams",
+        "cheap": "Lēti",
+        "cheapest_hour": "Lētākā stunda",
+        "cheapest_hours": "Lētākās stundas",
+        "cheap_time": "Lēta stunda",
+        "most_expensive_hour": "Dārgākā stunda",
+        "most_expensive_hours": "Dārgākās stundas",
+        "normal": "Parasts",
+        "expensive": "Dārgi"
+      }
+    }
+  }
+}

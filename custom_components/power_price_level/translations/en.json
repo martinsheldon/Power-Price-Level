@@ -1,0 +1,157 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Power Price Level",
+        "data": {
+          "language": "Language",
+          "language_auto": "Automatic",
+          "language_en": "English",
+          "language_nb": "Norsk",
+          "level_language": "Language",
+          "level_language_auto": "Automatic",
+          "level_language_en": "English",
+          "level_language_nb": "Norsk",
+          "nordpool_entity": "Nordpool sensor entity",
+          "sensor_name": "Sensor base name",
+          "currency": "Currency",
+          "currency_NOK": "Norwegian Krone",
+          "currency_SEK": "Swedish Krona",
+          "currency_DKK": "Danish Krone",
+          "currency_EUR": "Euro",
+          "grid_day": "Grid day price",
+          "grid_night": "Grid night price",
+          "additional": "Additional price",
+          "cheap_price": "Cheap price threshold",
+          "night_hour_start": "Night starts at (hour)",
+          "night_hour_end": "Night ends at (hour)",
+          "day_hour_end": "Day ends at (hour)",
+          "cheap_hours": "Number of cheapest hours",
+          "expensive_hours": "Number of most expensive hours",
+          "cheap_hours_night": "Cheapest hours during night",
+          "cheap_hours_day": "Cheapest hours during day",
+          "cheap_hours_evening": "Cheapest hours during evening"
+        }
+      },
+      "costs": {
+        "title": "Costs",
+        "data": {
+          "grid_day": "Grid day price",
+          "grid_night": "Grid night price",
+          "additional": "Additional price",
+          "cheap_price": "Cheap price threshold",
+          "night_hour_start": "Night starts at (hour)",
+          "night_hour_end": "Night ends at (hour)"
+        }
+      },
+      "hours": {
+        "title": "Hours & counts",
+        "errors": {
+          "empty": "This field is required.",
+          "hour_end_out_of_range": "Hour must be between 0 and 24 (cannot be negative).",
+          "must_be_greater_than_night": "Day end must be greater than night end.",
+          "sum_exceeds_24": "Sum of cheapest and most expensive hours cannot exceed 24.",
+          "max_8": "This value cannot exceed 8 hours.",
+          "invalid_input": "Invalid input.",
+          "hour_range": "Hour must be in the range 0–24 (cannot be negative)."
+        },
+        
+        "data": {
+          "night_hour_start": "Night starts at (hour)",
+          "night_hour_end": "Night ends at (hour)",
+          "day_hour_end": "Day ends at (hour)",
+          "cheap_hours": "Number of cheapest hours",
+          "expensive_hours": "Number of most expensive hours",
+          "cheap_hours_night": "Cheapest hours during night",
+          "cheap_hours_day": "Cheapest hours during day",
+          "cheap_hours_evening": "Cheapest hours during evening"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Power Price Level – Settings",
+        "data": {
+          "language": "Language",
+          "language_auto": "Automatic",
+          "language_en": "English",
+          "language_nb": "Norsk",
+          "level_language": "Language",
+          "level_language_auto": "Automatic",
+          "level_language_en": "English",
+          "level_language_nb": "Norsk",
+          "nordpool_entity": "Nordpool sensor entity",
+          "sensor_name": "Sensor base name",
+          "currency": "Currency",
+          "currency_NOK": "Norwegian Krone",
+          "currency_SEK": "Swedish Krona",
+          "currency_DKK": "Danish Krone",
+          "currency_EUR": "Euro",
+          "grid_day": "Grid day price",
+          "grid_night": "Grid night price",
+          "additional": "Additional price",
+          "cheap_price": "Cheap price threshold",
+          "night_hour_end": "Night ends at (hour)",
+          "day_hour_end": "Day ends at (hour)",
+          "cheap_hours": "Number of cheapest hours",
+          "expensive_hours": "Number of most expensive hours",
+          "cheap_hours_night": "Cheapest hours during night",
+          "cheap_hours_day": "Cheapest hours during day",
+          "cheap_hours_evening": "Cheapest hours during evening"
+        }
+      }
+      ,
+      "costs": {
+        "title": "Costs",
+        "data": {
+          "grid_day": "Grid day price",
+          "grid_night": "Grid night price",
+          "additional": "Additional price",
+          "cheap_price": "Cheap price threshold",
+          "night_hour_start": "Night starts at (hour)",
+          "night_hour_end": "Night ends at (hour)"
+        }
+      },
+      "more": {
+        "title": "Hours & counts",
+        "errors": {
+          "empty": "This field is required.",
+          "cannot_save": "Could not save options.",
+          "hour_range": "Hour must be in the range 0–24.",
+          "must_be_greater_than_night": "Day end must be greater than night end.",
+          "sum_exceeds_24": "Sum of cheapest and most expensive hours cannot exceed 24.",
+          "max_8": "This value cannot exceed 8 hours.",
+          "invalid_input": "Invalid input."
+        },
+        "data": {
+          "night_hour_start": "Night starts at (hour)",
+          "night_hour_end": "Night ends at (hour)",
+          "day_hour_end": "Day ends at (hour)",
+          "cheap_hours": "Number of cheapest hours",
+          "expensive_hours": "Number of most expensive hours",
+          "cheap_hours_night": "Cheapest hours during night",
+          "cheap_hours_day": "Cheapest hours during day",
+          "cheap_hours_evening": "Cheapest hours during evening"
+        }
+      }
+    }
+  }
+  ,
+  "sensor": {
+    "power_price_level": {
+      "state": {
+        "unavailable": "Unavailable",
+        "cheap": "Cheap",
+        "cheapest_hour": "Cheapest hour",
+        "cheapest_hours": "Cheapest hours",
+        "cheap_time": "Cheap time",
+        "most_expensive_hour": "Most expensive hour",
+        "most_expensive_hours": "Most expensive hours",
+        "normal": "Normal",
+        "expensive": "Expensive"
+      }
+    }
+  }
+}
