@@ -631,9 +631,18 @@ class PowerPriceLevelSensor(SensorEntity):
         if cheapest_key is not None and p_key == cheapest_key:
             return labels["cheapest_hour"]
 
-        # Build lists of keys for requested counts (start at index 0)
-        cheapest_keys = [ _k(day24_sorted[i]) for i in range(min(max(0, cheaphours), len(day24_sorted))) if day24_sorted[i] is not None ]
-        mostexpensive_keys = [ _k(day24_sorted_desc[i]) for i in range(min(max(0, expensivehours), len(day24_sorted_desc))) if day24_sorted_desc[i] is not None ]
+        # Build lists of keys for requested counts.
+        # Exclude the absolute cheapest/most-expensive so these grouped lists
+        # represent the next-N cheapest / most expensive hours (template semantics).
+        # absolute cheapest is at day24_sorted[0], absolute most-expensive is at
+        # day24_sorted_desc[0]. Start selection at index 1.
+        start_index_cheapest = 1 if len(day24_sorted) > 0 else 0
+        end_index_cheapest = min(start_index_cheapest + max(0, cheaphours), len(day24_sorted))
+        cheapest_keys = [ _k(day24_sorted[i]) for i in range(start_index_cheapest, end_index_cheapest) if day24_sorted[i] is not None ]
+
+        start_index_exp = 1 if len(day24_sorted_desc) > 0 else 0
+        end_index_exp = min(start_index_exp + max(0, expensivehours), len(day24_sorted_desc))
+        mostexpensive_keys = [ _k(day24_sorted_desc[i]) for i in range(start_index_exp, end_index_exp) if day24_sorted_desc[i] is not None ]
 
         if p_key in cheapest_keys:
             return labels["cheapest_hours"]
