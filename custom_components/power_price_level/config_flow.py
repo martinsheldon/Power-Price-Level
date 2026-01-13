@@ -24,6 +24,8 @@ from .const import (
     CONF_NIGHT_HOUR_END,
     CONF_NIGHT_HOUR_START,
     CONF_DAY_HOUR_END,
+    CONF_GRID_NIGHT_START,
+    CONF_GRID_NIGHT_END,
     CONF_CHEAP_HOURS,
     CONF_EXPENSIVE_HOURS,
     CONF_CHEAP_HOURS_NIGHT,
@@ -32,6 +34,8 @@ from .const import (
     DEFAULT_CHEAP_PRICE,
     DEFAULT_NIGHT_HOUR_END,
     DEFAULT_NIGHT_HOUR_START,
+    DEFAULT_GRID_NIGHT_START,
+    DEFAULT_GRID_NIGHT_END,
     DEFAULT_DAY_HOUR_END,
     DEFAULT_CHEAP_HOURS,
     DEFAULT_EXPENSIVE_HOURS,
@@ -151,6 +155,8 @@ class PowerPriceLevelConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             CONF_CHEAP_PRICE: _unit_to_str(DEFAULT_CHEAP_PRICE),
             CONF_NIGHT_HOUR_START: DEFAULT_NIGHT_HOUR_START,
             CONF_NIGHT_HOUR_END: DEFAULT_NIGHT_HOUR_END,
+            CONF_GRID_NIGHT_START: DEFAULT_GRID_NIGHT_START,
+            CONF_GRID_NIGHT_END: DEFAULT_GRID_NIGHT_END,
         }
 
         # Merge any temp values from previous step (sensor name / nordpool)
@@ -168,6 +174,8 @@ class PowerPriceLevelConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     {
                         CONF_GRID_DAY: parse_unit(str(user_input[CONF_GRID_DAY])),
                         CONF_GRID_NIGHT: parse_unit(str(user_input[CONF_GRID_NIGHT])),
+                        CONF_GRID_NIGHT_START: int(user_input.get(CONF_GRID_NIGHT_START, defaults[CONF_GRID_NIGHT_START])),
+                        CONF_GRID_NIGHT_END: int(user_input.get(CONF_GRID_NIGHT_END, defaults[CONF_GRID_NIGHT_END])),
                         CONF_ADDITIONAL: parse_unit(str(user_input[CONF_ADDITIONAL])),
                         CONF_CHEAP_PRICE: parse_unit(str(user_input[CONF_CHEAP_PRICE])),
                         CONF_NIGHT_HOUR_START: int(user_input.get(CONF_NIGHT_HOUR_START, defaults[CONF_NIGHT_HOUR_START])),
@@ -186,8 +194,9 @@ class PowerPriceLevelConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Required(CONF_GRID_NIGHT, default=defaults[CONF_GRID_NIGHT], description={"suffix": unit_suffix}): str,
                 vol.Required(CONF_ADDITIONAL, default=defaults[CONF_ADDITIONAL], description={"suffix": unit_suffix}): str,
                 vol.Required(CONF_CHEAP_PRICE, default=defaults[CONF_CHEAP_PRICE], description={"suffix": unit_suffix}): str,
-                vol.Required(CONF_NIGHT_HOUR_START, default=defaults[CONF_NIGHT_HOUR_START]): selector.NumberSelector({"min": 0, "max": 23, "step": 1, "mode": "box"}),
-                vol.Required(CONF_NIGHT_HOUR_END, default=defaults[CONF_NIGHT_HOUR_END]): selector.NumberSelector({"min": 0, "max": 23, "step": 1, "mode": "box"}),
+
+                vol.Required(CONF_GRID_NIGHT_START, default=defaults[CONF_GRID_NIGHT_START]): selector.NumberSelector({"min": 0, "max": 23, "step": 1, "mode": "box"}),
+                vol.Required(CONF_GRID_NIGHT_END, default=defaults[CONF_GRID_NIGHT_END]): selector.NumberSelector({"min": 0, "max": 23, "step": 1, "mode": "box"}),
             }
         )
 
@@ -254,6 +263,8 @@ class PowerPriceLevelConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     CONF_CURRENCY: str(self._temp.get(CONF_CURRENCY, DEFAULT_CURRENCY)),
                     CONF_GRID_DAY: parse_unit(str(self._temp.get(CONF_GRID_DAY, DEFAULT_GRID_DAY))),
                     CONF_GRID_NIGHT: parse_unit(str(self._temp.get(CONF_GRID_NIGHT, DEFAULT_GRID_NIGHT))),
+                    CONF_GRID_NIGHT_START: int(self._temp.get(CONF_GRID_NIGHT_START, DEFAULT_GRID_NIGHT_START)),
+                    CONF_GRID_NIGHT_END: int(self._temp.get(CONF_GRID_NIGHT_END, DEFAULT_GRID_NIGHT_END)),
                     CONF_ADDITIONAL: parse_unit(str(self._temp.get(CONF_ADDITIONAL, DEFAULT_ADDITIONAL))),
                     CONF_CHEAP_PRICE: parse_unit(str(self._temp.get(CONF_CHEAP_PRICE, DEFAULT_CHEAP_PRICE))),
                     CONF_NIGHT_HOUR_START: int(self._temp.get(CONF_NIGHT_HOUR_START, DEFAULT_NIGHT_HOUR_START)),

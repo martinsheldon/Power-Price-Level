@@ -5,6 +5,7 @@
         "title": "Strømprisnivå",
         "data": {
           "nordpool_entity": "Nordpool-sensorenhet",
+          "powerprice_entity": "Strømpris-sensorenhet",
           "sensor_name": "Sensorens grunnnavn",
           "language": "Språk",
           "language_auto": "Automatisk",
@@ -21,6 +22,8 @@
           "currency_EUR": "Euro",
           "grid_day": "Nettleie dagpris",
           "grid_night": "Nettleie nattpris",
+          "grid_night_start": "Nettleie natt starter kl. (time)",
+          "grid_night_end": "Nettleie natt slutter kl. (time)",
           "additional": "Tillegg",
           "cheap_price": "Terskel for billig pris",
           "night_hour_start": "Natten starter kl. (time)",
@@ -38,6 +41,8 @@
         "data": {
           "grid_day": "Nettleie dagpris",
           "grid_night": "Nettleie nattpris",
+          "grid_night_start": "Nettleie natt starter kl. (time)",
+          "grid_night_end": "Nettleie natt slutter kl. (time)",
           "additional": "Tillegg",
           "cheap_price": "Terskel for billig pris",
           "night_hour_start": "Natten starter kl. (time)",
@@ -74,6 +79,7 @@
         "title": "Strømprisnivå – Innstillinger",
         "data": {
           "nordpool_entity": "Nordpool-sensorenhet",
+          "powerprice_entity": "Strømpris-sensorenhet",
           "sensor_name": "Sensorens grunnnavn",
           "language": "Språk",
           "language_auto": "Automatisk",

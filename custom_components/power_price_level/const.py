@@ -46,6 +46,12 @@ DEFAULT_CHEAP_HOURS_EVENING = 2
 CONF_NIGHT_HOUR_START = "night_hour_start"
 DEFAULT_NIGHT_HOUR_START = 22
 
+# Separate grid night window (allows different night window for grid pricing vs level rules)
+CONF_GRID_NIGHT_START = "grid_night_start"
+CONF_GRID_NIGHT_END = "grid_night_end"
+DEFAULT_GRID_NIGHT_START = DEFAULT_NIGHT_HOUR_START
+DEFAULT_GRID_NIGHT_END = DEFAULT_NIGHT_HOUR_END
+
 # Currency/unit selection
 CONF_CURRENCY = "currency"
 DEFAULT_CURRENCY = "NOK"

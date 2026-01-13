@@ -15,6 +15,7 @@ from .const import (
     DEFAULT_NAME,
     CONF_SENSOR_NAME,
     CONF_NORDPOOL_ENTITY,
+    CONF_POWERPRICE_ENTITY,
     CONF_GRID_DAY,
     CONF_GRID_NIGHT,
     CONF_ADDITIONAL,
@@ -23,6 +24,8 @@ from .const import (
     CONF_NIGHT_HOUR_END,
     CONF_NIGHT_HOUR_START,
     CONF_DAY_HOUR_END,
+    CONF_GRID_NIGHT_START,
+    CONF_GRID_NIGHT_END,
     CONF_CHEAP_HOURS,
     CONF_EXPENSIVE_HOURS,
     CONF_CHEAP_HOURS_NIGHT,
@@ -34,6 +37,8 @@ from .const import (
     DEFAULT_LEVEL_LANGUAGE,
     DEFAULT_NIGHT_HOUR_START,
     DEFAULT_NIGHT_HOUR_END,
+    DEFAULT_GRID_NIGHT_START,
+    DEFAULT_GRID_NIGHT_END,
     CURRENCY_SUBUNIT_MAP,
 )
 
@@ -340,6 +345,7 @@ class PowerPriceSensor(SensorEntity):
         )
 
         self._unsub = None
+        
 
     @property
     def native_value(self) -> Optional[float]:
@@ -404,7 +410,15 @@ class PowerPriceSensor(SensorEntity):
             self._native_value = None
 
         dst_today_23 = len(today_hourly) == 23
-        nighthourstart = int(cfg.get(CONF_NIGHT_HOUR_START, DEFAULT_NIGHT_HOUR_START))
+        # Use the generic night window (not the grid-specific one) when building
+        # the `prices` arrays so price-level calculations use the user-configured
+        # night window (CONF_NIGHT_HOUR_START/END). Grid-specific variants
+        # (`CONF_GRID_NIGHT_START/END`) are only for grid-adders display and
+        # should not affect which hours are considered "night" for levels.
+        # Per original template semantics: night ALWAYS starts at 0 for level
+        # calculations (user expectation). Ignore configured grid/night start
+        # here and use 0 as the fixed night start.
+        nighthourstart = 0
         nighthourend = int(cfg.get(CONF_NIGHT_HOUR_END, DEFAULT_NIGHT_HOUR_END))
         prices_today = _build_24_prices(today_hourly, grid_day, grid_night, nighthourstart, nighthourend, dst_today_23, additional)
 
@@ -437,12 +451,16 @@ class PowerPriceSensor(SensorEntity):
         ]
 
         self._attrs = {
+            "config": {
+                "grid_day": float(cfg.get(CONF_GRID_DAY, 0.0)),
+                "grid_night": float(cfg.get(CONF_GRID_NIGHT, 0.0)),
+                "grid_night_start": int(cfg.get(CONF_GRID_NIGHT_START, DEFAULT_GRID_NIGHT_START)),
+                "grid_night_end": int(cfg.get(CONF_GRID_NIGHT_END, DEFAULT_GRID_NIGHT_END)),
+                "additional": float(cfg.get(CONF_ADDITIONAL, 0.0)),
+            },
             "prices": {"today": prices_today, "tomorrow": prices_tomorrow},
             "raw_today": raw_today,
             "raw_tomorrow": raw_tomorrow,
-            "grid_day": grid_day,
-            "grid_night": grid_night,
-            "additional": additional,
         }
 
 
@@ -468,7 +486,9 @@ class PowerPriceLevelSensor(SensorEntity):
 
         # Auto-discover the PowerPriceSensor from the same entry via entity registry unique_id
         self._power_price_unique_id = f"{entry.entry_id}_power_price"
-        self._power_price_entity_id: Optional[str] = None
+        # Allow user-selected power price entity from options/data
+        cfg_init = entry.options or entry.data
+        self._power_price_entity_id: Optional[str] = str(cfg_init.get(CONF_POWERPRICE_ENTITY, entry.data.get(CONF_POWERPRICE_ENTITY, None))) if cfg_init.get(CONF_POWERPRICE_ENTITY, entry.data.get(CONF_POWERPRICE_ENTITY, None)) else None
 
         self._unsub = None
 
@@ -498,7 +518,9 @@ class PowerPriceLevelSensor(SensorEntity):
         return None
 
     async def async_added_to_hass(self) -> None:
-        self._power_price_entity_id = self._resolve_power_price_entity_id()
+        # If user hasn't selected a custom power price entity, try to resolve the integration-created one
+        if not self._power_price_entity_id:
+            self._power_price_entity_id = self._resolve_power_price_entity_id()
 
         @callback
         def _changed(_event) -> None:
@@ -506,9 +528,7 @@ class PowerPriceLevelSensor(SensorEntity):
 
         # Track the price sensor so level updates when prices change
         if self._power_price_entity_id:
-            self._unsub = async_track_state_change_event(
-                self.hass, [self._power_price_entity_id], _changed
-            )
+            self._unsub = async_track_state_change_event(self.hass, [self._power_price_entity_id], _changed)
 
     async def async_will_remove_from_hass(self) -> None:
         if self._unsub:
@@ -599,38 +619,41 @@ class PowerPriceLevelSensor(SensorEntity):
         # Use stable keys for membership checks to avoid string-format mismatches
         p_key = _k(pricethishour)
 
-        # ---- Decision order: cheap, exact cheapest, group cheapest/most-expensive, cheap_time, others ----
-        if cheapprice > 0 and pricethishour <= cheapprice:
-            return labels["cheap"]
-
         # exact cheapest / most expensive comparisons using keys
         cheapest_key = _k(cheapesthour) if cheapesthour is not None else None
         mostexpensive_key = _k(mostexpensivehour) if mostexpensivehour is not None else None
 
+        # Original decision order (template): cheap_price -> cheapest_hour ->
+        # cheapest_hours -> per-period cheapest -> most-expensive -> normal/expensive
+        if cheapprice > 0 and pricethishour <= cheapprice:
+            return labels["cheap"]
+
         if cheapest_key is not None and p_key == cheapest_key:
             return labels["cheapest_hour"]
 
-        # Build sets of keys for requested counts (start at index 0)
-        cheapest_keys = { _k(day24_sorted[i]) for i in range(min(max(0, cheaphours), len(day24_sorted))) if day24_sorted[i] is not None }
-        mostexpensive_keys = { _k(day24_sorted_desc[i]) for i in range(min(max(0, expensivehours), len(day24_sorted_desc))) if day24_sorted_desc[i] is not None }
+        # Build lists of keys for requested counts (start at index 0)
+        cheapest_keys = [ _k(day24_sorted[i]) for i in range(min(max(0, cheaphours), len(day24_sorted))) if day24_sorted[i] is not None ]
+        mostexpensive_keys = [ _k(day24_sorted_desc[i]) for i in range(min(max(0, expensivehours), len(day24_sorted_desc))) if day24_sorted_desc[i] is not None ]
 
         if p_key in cheapest_keys:
             return labels["cheapest_hours"]
 
-        # Per-period cheapest sets (for night/day/evening slices)
-        night_keys = [v for v in (night_slice if isinstance(night_slice, list) else [])]
-        day_keys = [v for v in (day_slice if isinstance(day_slice, list) else [])]
-        eve_keys = [v for v in (eve_slice if isinstance(eve_slice, list) else [])]
+        # Per-period cheapest sets (for night/day/evening slices) — no supplementation
+        cheapest_night_keys = [ _k(night_slice[i]) for i in range(min(max(0, cheaphoursnight), len(night_slice))) if night_slice[i] is not None ]
+        cheapest_day_keys = [ _k(day_slice[i]) for i in range(min(max(0, cheaphoursday), len(day_slice))) if day_slice[i] is not None ]
+        cheapest_evening_keys = [ _k(eve_slice[i]) for i in range(min(max(0, cheaphoursevening), len(eve_slice))) if eve_slice[i] is not None ]
 
-        cheapest_night_keys = { _k(night_keys[i]) for i in range(min(max(0, cheaphoursnight), len(night_keys))) if night_keys[i] is not None }
-        cheapest_day_keys = { _k(day_keys[i]) for i in range(min(max(0, cheaphoursday), len(day_keys))) if day_keys[i] is not None }
-        cheapest_evening_keys = { _k(eve_keys[i]) for i in range(min(max(0, cheaphoursevening), len(eve_keys))) if eve_keys[i] is not None }
+        # Check per-period cheap_time
+        in_night = (nighthourstart < nighthourend and nighthourstart <= hour < nighthourend) or (
+            nighthourstart >= nighthourend and (hour >= nighthourstart or hour < nighthourend)
+        )
+        in_day = nighthourend <= hour < dayhourend
+        in_evening = dayhourend <= hour < eveninghourend
 
-        # Check per-period cheap_time before marking most-expensive
         if (
-            (p_key in cheapest_day_keys and nighthourend <= hour < dayhourend)
-            or (p_key in cheapest_night_keys and nighthourstart <= hour < nighthourend)
-            or (p_key in cheapest_evening_keys and dayhourend <= hour < eveninghourend)
+            (p_key in cheapest_day_keys and in_day)
+            or (p_key in cheapest_night_keys and in_night)
+            or (p_key in cheapest_evening_keys and in_evening)
         ):
             return labels["cheap_time"]
 
@@ -688,9 +711,9 @@ class PowerPriceLevelSensor(SensorEntity):
         self._attrs = {
             "source_entity": self._power_price_entity_id,
             "config": {
-                "cheap_price": float(cfg.get(CONF_CHEAP_PRICE, 0.0)),
                 "night_hour_end": int(cfg.get(CONF_NIGHT_HOUR_END, 0)),
                 "day_hour_end": int(cfg.get(CONF_DAY_HOUR_END, 24)),
+                "cheap_price": float(cfg.get(CONF_CHEAP_PRICE, 0.0)),
                 "cheap_hours": int(cfg.get(CONF_CHEAP_HOURS, 0)),
                 "expensive_hours": int(cfg.get(CONF_EXPENSIVE_HOURS, 0)),
                 "cheap_hours_night": int(cfg.get(CONF_CHEAP_HOURS_NIGHT, 0)),

@@ -16,11 +16,15 @@ from .const import (
     CONF_ADDITIONAL,
     CONF_CHEAP_PRICE,
     CONF_NORDPOOL_ENTITY,
+    CONF_POWERPRICE_ENTITY,
     DEFAULT_NORDPOOL_ENTITY,
+    DEFAULT_POWERPRICE_ENTITY,
     CONF_NIGHT_HOUR_END,
     CONF_NIGHT_HOUR_START,
     CONF_DAY_HOUR_END,
     CONF_CHEAP_HOURS,
+    CONF_GRID_NIGHT_START,
+    CONF_GRID_NIGHT_END,
     CONF_EXPENSIVE_HOURS,
     CONF_CHEAP_HOURS_NIGHT,
     CONF_CHEAP_HOURS_DAY,
@@ -34,6 +38,8 @@ from .const import (
     CONF_LEVEL_LANGUAGE,
     DEFAULT_LEVEL_LANGUAGE,
     DEFAULT_NIGHT_HOUR_START,
+    DEFAULT_GRID_NIGHT_START,
+    DEFAULT_GRID_NIGHT_END,
     LANGUAGE_DISPLAY_MAP,
     DOMAIN,
 )
@@ -57,6 +63,17 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
                 eid = (st.entity_id or "").lower()
                 name = str(st.attributes.get("friendly_name", "") or "").lower()
                 if "nordpool" in eid or "nordpool" in name:
+                    return st.entity_id
+        except Exception:
+            pass
+        return None
+
+    def _find_powerprice_entity(self) -> str | None:
+        try:
+            for st in self.hass.states.async_all():
+                eid = (st.entity_id or "").lower()
+                name = str(st.attributes.get("friendly_name", "") or "").lower()
+                if "power_price" in eid or "power price" in name or "powerprice" in eid:
                     return st.entity_id
         except Exception:
             pass
@@ -127,8 +144,17 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
                 nord_default = self._find_nordpool_entity()
             except Exception:
                 nord_default = None
+
+        # Determine powerprice default: prefer current/entry value, else auto-detect
+        power_default = current.get(CONF_POWERPRICE_ENTITY, self._entry.data.get(CONF_POWERPRICE_ENTITY, None))
+        if not power_default:
+            try:
+                power_default = self._find_powerprice_entity()
+            except Exception:
+                power_default = None
         defaults = {
             CONF_NORDPOOL_ENTITY: str(nord_default or DEFAULT_NORDPOOL_ENTITY),
+            CONF_POWERPRICE_ENTITY: str(power_default or DEFAULT_POWERPRICE_ENTITY),
             CONF_SENSOR_NAME: str(current.get(CONF_SENSOR_NAME, self._entry.data.get(CONF_SENSOR_NAME, DEFAULT_NAME))),
             CONF_CURRENCY: str(current.get(CONF_CURRENCY, self._entry.data.get(CONF_CURRENCY, DEFAULT_CURRENCY))),
             CONF_LEVEL_LANGUAGE: str(current.get(CONF_LEVEL_LANGUAGE, self._entry.data.get(CONF_LEVEL_LANGUAGE, DEFAULT_LEVEL_LANGUAGE))),
@@ -141,6 +167,7 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
         if user_input is not None:
                 try:
                     nord = str(user_input[CONF_NORDPOOL_ENTITY]).strip()
+                    power = str(user_input[CONF_POWERPRICE_ENTITY]).strip()
                     name = str(user_input[CONF_SENSOR_NAME]).strip()
                     currency = str(user_input[CONF_CURRENCY]).strip()
                     # selected value is a display name (e.g. "Norsk"); map to code
@@ -151,7 +178,7 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
                     if not name:
                         raise ValueError("sensor name empty")
 
-                    self._temp = {CONF_NORDPOOL_ENTITY: nord, CONF_SENSOR_NAME: name, CONF_CURRENCY: currency, CONF_LEVEL_LANGUAGE: level_lang}
+                    self._temp = {CONF_NORDPOOL_ENTITY: nord, CONF_POWERPRICE_ENTITY: power, CONF_SENSOR_NAME: name, CONF_CURRENCY: currency, CONF_LEVEL_LANGUAGE: level_lang}
                     return await self.async_step_costs()
                 except Exception:
                     errors["base"] = "invalid_input"
@@ -160,6 +187,7 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
             {
                 vol.Required(CONF_SENSOR_NAME, default=defaults[CONF_SENSOR_NAME]): str,
                 vol.Required(CONF_NORDPOOL_ENTITY, default=defaults[CONF_NORDPOOL_ENTITY]): selector.EntitySelector({"domain": "sensor"}),
+                vol.Required(CONF_POWERPRICE_ENTITY, default=defaults[CONF_POWERPRICE_ENTITY]): selector.EntitySelector({"domain": "sensor"}),
                 vol.Required(
                     CONF_LEVEL_LANGUAGE,
                     default=(
@@ -191,6 +219,8 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
             CONF_CHEAP_PRICE: _unit_to_str(float(current.get(CONF_CHEAP_PRICE, self._entry.data.get(CONF_CHEAP_PRICE, 0.0)))),
             CONF_NIGHT_HOUR_START: int(current.get(CONF_NIGHT_HOUR_START, self._entry.data.get(CONF_NIGHT_HOUR_START, DEFAULT_NIGHT_HOUR_START))),
             CONF_NIGHT_HOUR_END: int(current.get(CONF_NIGHT_HOUR_END, self._entry.data.get(CONF_NIGHT_HOUR_END, DEFAULT_NIGHT_HOUR_END))),
+            CONF_GRID_NIGHT_START: int(current.get(CONF_GRID_NIGHT_START, self._entry.data.get(CONF_GRID_NIGHT_START, DEFAULT_GRID_NIGHT_START))),
+            CONF_GRID_NIGHT_END: int(current.get(CONF_GRID_NIGHT_END, self._entry.data.get(CONF_GRID_NIGHT_END, DEFAULT_GRID_NIGHT_END))),
         }
 
         # If we have temp from prior step, prefer that for ore fields
@@ -211,6 +241,8 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
                     {
                         CONF_GRID_DAY: parse_unit(user_input[CONF_GRID_DAY]),
                         CONF_GRID_NIGHT: parse_unit(user_input[CONF_GRID_NIGHT]),
+                        CONF_GRID_NIGHT_START: int(user_input.get(CONF_GRID_NIGHT_START, defaults[CONF_GRID_NIGHT_START])),
+                        CONF_GRID_NIGHT_END: int(user_input.get(CONF_GRID_NIGHT_END, defaults[CONF_GRID_NIGHT_END])),
                         CONF_ADDITIONAL: parse_unit(user_input[CONF_ADDITIONAL]),
                         CONF_CHEAP_PRICE: parse_unit(user_input[CONF_CHEAP_PRICE]),
                         CONF_NIGHT_HOUR_START: int(user_input.get(CONF_NIGHT_HOUR_START, defaults[CONF_NIGHT_HOUR_START])),
@@ -228,8 +260,8 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
                 vol.Required(CONF_GRID_NIGHT, default=defaults[CONF_GRID_NIGHT], description={"suffix": unit_suffix}): str,
                 vol.Required(CONF_ADDITIONAL, default=defaults[CONF_ADDITIONAL], description={"suffix": unit_suffix}): str,
                 vol.Required(CONF_CHEAP_PRICE, default=defaults[CONF_CHEAP_PRICE], description={"suffix": unit_suffix}): str,
-                vol.Required(CONF_NIGHT_HOUR_START, default=defaults[CONF_NIGHT_HOUR_START]): selector.NumberSelector({"min": 0, "max": 23, "step": 1, "mode": "box"}),
-                vol.Required(CONF_NIGHT_HOUR_END, default=defaults[CONF_NIGHT_HOUR_END]): selector.NumberSelector({"min": 0, "max": 23, "step": 1, "mode": "box"}),
+                vol.Required(CONF_GRID_NIGHT_START, default=defaults[CONF_GRID_NIGHT_START]): selector.NumberSelector({"min": 0, "max": 23, "step": 1, "mode": "box"}),
+                vol.Required(CONF_GRID_NIGHT_END, default=defaults[CONF_GRID_NIGHT_END]): selector.NumberSelector({"min": 0, "max": 23, "step": 1, "mode": "box"}),
             }
         )
 
@@ -243,7 +275,6 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
         # tracing removed
 
         current = self._entry.options or {}
-
         defaults = {
             CONF_NIGHT_HOUR_END: int(current.get(CONF_NIGHT_HOUR_END, self._entry.data.get(CONF_NIGHT_HOUR_END, 6))),
             CONF_DAY_HOUR_END: int(current.get(CONF_DAY_HOUR_END, self._entry.data.get(CONF_DAY_HOUR_END, 15))),
@@ -254,8 +285,18 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
             CONF_CHEAP_HOURS_EVENING: int(current.get(CONF_CHEAP_HOURS_EVENING, self._entry.data.get(CONF_CHEAP_HOURS_EVENING, 2))),
         }
 
-        # If we have temp from prior steps, prefer that for ore fields
-        # schema must be defined before any early returns that reference it
+        # If we have temp from prior steps, prefer that for hours/other fields
+        if hasattr(self, "_temp") and self._temp:
+            # Merge temp values into defaults so the form reflects recent changes
+            for k, v in self._temp.items():
+                if k in defaults:
+                    try:
+                        defaults[k] = int(v)
+                    except Exception:
+                        # ignore non-int temp values
+                        pass
+
+        # schema must be defined after defaults are finalized
         schema = vol.Schema(
             {
                 vol.Required(
@@ -299,11 +340,14 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
             try:
                 options = {
                     CONF_NORDPOOL_ENTITY: str(temp.get(CONF_NORDPOOL_ENTITY, self._entry.data.get(CONF_NORDPOOL_ENTITY, DEFAULT_NORDPOOL_ENTITY))).strip(),
+                    CONF_POWERPRICE_ENTITY: str(temp.get(CONF_POWERPRICE_ENTITY, self._entry.data.get(CONF_POWERPRICE_ENTITY, DEFAULT_POWERPRICE_ENTITY))).strip(),
                     CONF_SENSOR_NAME: str(temp.get(CONF_SENSOR_NAME, self._entry.data.get(CONF_SENSOR_NAME, DEFAULT_NAME))).strip(),
                     CONF_CURRENCY: str(temp.get(CONF_CURRENCY, self._entry.data.get(CONF_CURRENCY, DEFAULT_CURRENCY))),
                     CONF_LEVEL_LANGUAGE: str(temp.get(CONF_LEVEL_LANGUAGE, self._entry.data.get(CONF_LEVEL_LANGUAGE, DEFAULT_LEVEL_LANGUAGE))),
                     CONF_GRID_DAY: parse_unit(str(temp.get(CONF_GRID_DAY, self._entry.data.get(CONF_GRID_DAY, 0.0)))),
                     CONF_GRID_NIGHT: parse_unit(str(temp.get(CONF_GRID_NIGHT, self._entry.data.get(CONF_GRID_NIGHT, 0.0)))),
+                    CONF_GRID_NIGHT_START: int(temp.get(CONF_GRID_NIGHT_START, self._entry.data.get(CONF_GRID_NIGHT_START, DEFAULT_GRID_NIGHT_START))),
+                    CONF_GRID_NIGHT_END: int(temp.get(CONF_GRID_NIGHT_END, self._entry.data.get(CONF_GRID_NIGHT_END, DEFAULT_GRID_NIGHT_END))),
                     CONF_ADDITIONAL: parse_unit(str(temp.get(CONF_ADDITIONAL, self._entry.data.get(CONF_ADDITIONAL, 0.0)))),
                     CONF_CHEAP_PRICE: parse_unit(str(temp.get(CONF_CHEAP_PRICE, self._entry.data.get(CONF_CHEAP_PRICE, 0.0)))),
                     CONF_NIGHT_HOUR_START: int(user_input.get(CONF_NIGHT_HOUR_START, temp.get(CONF_NIGHT_HOUR_START, self._entry.data.get(CONF_NIGHT_HOUR_START, DEFAULT_NIGHT_HOUR_START)))),
@@ -321,6 +365,8 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
                 # validation (provide human-readable messages via translation keys)
                 if not options[CONF_NORDPOOL_ENTITY]:
                     errors["nordpool_entity"] = "empty"
+                if not options.get(CONF_POWERPRICE_ENTITY):
+                    errors["powerprice_entity"] = "empty"
                 if not options[CONF_SENSOR_NAME]:
                     errors["sensor_name"] = "empty"
 
