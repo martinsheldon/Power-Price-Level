@@ -57,7 +57,7 @@ CONF_CURRENCY = "currency"
 DEFAULT_CURRENCY = "NOK"
 
 # map currency to the unit used for pricing inputs (major currency per kWh)
-CURRENCY_SUBUNIT_MAP = {
+CURRENCY_UNIT_MAP = {
 	"NOK": "NOK/kWh",
 	"DKK": "DKK/kWh",
 	"SEK": "SEK/kWh",

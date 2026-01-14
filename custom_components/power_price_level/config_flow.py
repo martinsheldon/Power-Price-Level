@@ -5,48 +5,48 @@ from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.helpers import translation as translation_helper
 from homeassistant.helpers import selector
-# logging removed
+
 
 from .options_flow import PowerPriceLevelOptionsFlowHandler
 from .const import (
-    DOMAIN,
-    CONF_NORDPOOL_ENTITY,
-    DEFAULT_NORDPOOL_ENTITY,
-    CONF_SENSOR_NAME,
-    DEFAULT_NAME,
-    CONF_GRID_DAY,
-    CONF_GRID_NIGHT,
     CONF_ADDITIONAL,
-    DEFAULT_GRID_DAY,
-    DEFAULT_GRID_NIGHT,
-    DEFAULT_ADDITIONAL,
-    CONF_CHEAP_PRICE,
-    CONF_NIGHT_HOUR_END,
-    CONF_NIGHT_HOUR_START,
-    CONF_DAY_HOUR_END,
-    CONF_GRID_NIGHT_START,
-    CONF_GRID_NIGHT_END,
     CONF_CHEAP_HOURS,
-    CONF_EXPENSIVE_HOURS,
-    CONF_CHEAP_HOURS_NIGHT,
     CONF_CHEAP_HOURS_DAY,
     CONF_CHEAP_HOURS_EVENING,
-    DEFAULT_CHEAP_PRICE,
-    DEFAULT_NIGHT_HOUR_END,
-    DEFAULT_NIGHT_HOUR_START,
-    DEFAULT_GRID_NIGHT_START,
-    DEFAULT_GRID_NIGHT_END,
-    DEFAULT_DAY_HOUR_END,
+    CONF_CHEAP_HOURS_NIGHT,
+    CONF_CHEAP_PRICE,
+    CONF_CURRENCY,
+    CONF_DAY_HOUR_END,
+    CONF_EXPENSIVE_HOURS,
+    CONF_GRID_DAY,
+    CONF_GRID_NIGHT,
+    CONF_GRID_NIGHT_END,
+    CONF_GRID_NIGHT_START,
+    CONF_LEVEL_LANGUAGE,
+    CONF_NIGHT_HOUR_END,
+    CONF_NIGHT_HOUR_START,
+    CONF_NORDPOOL_ENTITY,
+    CONF_SENSOR_NAME,
+    CURRENCY_UNIT_MAP,
+    DEFAULT_ADDITIONAL,
     DEFAULT_CHEAP_HOURS,
-    DEFAULT_EXPENSIVE_HOURS,
-    DEFAULT_CHEAP_HOURS_NIGHT,
     DEFAULT_CHEAP_HOURS_DAY,
     DEFAULT_CHEAP_HOURS_EVENING,
-    CONF_CURRENCY,
+    DEFAULT_CHEAP_HOURS_NIGHT,
+    DEFAULT_CHEAP_PRICE,
     DEFAULT_CURRENCY,
-    CURRENCY_SUBUNIT_MAP,
-    CONF_LEVEL_LANGUAGE,
+    DEFAULT_DAY_HOUR_END,
+    DEFAULT_EXPENSIVE_HOURS,
+    DEFAULT_GRID_DAY,
+    DEFAULT_GRID_NIGHT,
+    DEFAULT_GRID_NIGHT_END,
+    DEFAULT_GRID_NIGHT_START,
     DEFAULT_LEVEL_LANGUAGE,
+    DEFAULT_NAME,
+    DEFAULT_NIGHT_HOUR_END,
+    DEFAULT_NIGHT_HOUR_START,
+    DEFAULT_NORDPOOL_ENTITY,
+    DOMAIN,
     LANGUAGE_DISPLAY_MAP,
 )
 from .util import parse_unit
@@ -165,7 +165,7 @@ class PowerPriceLevelConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         
         # determine unit suffix for the ore fields based on selected currency
         currency = str(defaults.get(CONF_CURRENCY, DEFAULT_CURRENCY))
-        unit_suffix = CURRENCY_SUBUNIT_MAP.get(currency, "subunit/kWh")
+        unit_suffix = CURRENCY_UNIT_MAP.get(currency, "subunit/kWh")
 
         if user_input is not None:
             try:

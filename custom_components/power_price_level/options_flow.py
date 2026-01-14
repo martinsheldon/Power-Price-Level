@@ -34,7 +34,7 @@ from .const import (
     DEFAULT_NIGHT_HOUR_END,
     CONF_CURRENCY,
     DEFAULT_CURRENCY,
-    CURRENCY_SUBUNIT_MAP,
+    CURRENCY_UNIT_MAP,
     CONF_LEVEL_LANGUAGE,
     DEFAULT_LEVEL_LANGUAGE,
     DEFAULT_NIGHT_HOUR_START,
@@ -232,7 +232,7 @@ class PowerPriceLevelOptionsFlowHandler(config_entries.OptionsFlow):
 
         # determine unit suffix for the ore fields based on selected currency
         currency = str((self._temp.get(CONF_CURRENCY) if hasattr(self, "_temp") and self._temp else current.get(CONF_CURRENCY, DEFAULT_CURRENCY)))
-        unit_suffix = CURRENCY_SUBUNIT_MAP.get(currency, "subunit/kWh")
+        unit_suffix = CURRENCY_UNIT_MAP.get(currency, "subunit/kWh")
 
         if user_input is not None:
             try:

@@ -10,8 +10,10 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.event import async_track_state_change_event
 from homeassistant.util import dt as dt_util
+from homeassistant.helpers import translation as translation_helper
 
 from .const import (
+    DOMAIN,
     DEFAULT_NAME,
     CONF_SENSOR_NAME,
     CONF_NORDPOOL_ENTITY,
@@ -39,139 +41,13 @@ from .const import (
     DEFAULT_NIGHT_HOUR_END,
     DEFAULT_GRID_NIGHT_START,
     DEFAULT_GRID_NIGHT_END,
-    CURRENCY_SUBUNIT_MAP,
+    CURRENCY_UNIT_MAP,
 )
 
 from .const import LANGUAGE_DISPLAY_MAP
 
 # Use the central currency -> unit mapping from const.py
-_CURRENCY_UNIT_MAP = CURRENCY_SUBUNIT_MAP
-
-# Localization labels for level sensor
-_LEVEL_LABELS = {
-    "en": {
-        "unavailable": "Unavailable",
-        "cheap": "Cheap",
-        "cheapest_hour": "Cheapest hour",
-        "cheapest_hours": "Cheapest hours",
-        "cheap_time": "Cheap time",
-        "most_expensive_hour": "Most expensive hour",
-        "most_expensive_hours": "Most expensive hours",
-        "normal": "Normal",
-        "expensive": "Expensive",
-    },
-    "nb": {
-        "unavailable": "Utilgjengelig",
-        "cheap": "Billig",
-        "cheapest_hour": "Billigste time",
-        "cheapest_hours": "Billigste timer",
-        "cheap_time": "Billig time",
-        "most_expensive_hour": "Dyreste time",
-        "most_expensive_hours": "Dyreste timer",
-        "normal": "Normal",
-        "expensive": "Dyrt",
-    },
-    "sv": {
-        "unavailable": "Otillgänglig",
-        "cheap": "Billig",
-        "cheapest_hour": "Billigaste timmen",
-        "cheapest_hours": "Billigaste timmarna",
-        "cheap_time": "Billig tid",
-        "most_expensive_hour": "Dyraste timmen",
-        "most_expensive_hours": "Dyraste timmarna",
-        "normal": "Normal",
-        "expensive": "Dyrt",
-    },
-    "da": {
-        "unavailable": "Utilgængelig",
-        "cheap": "Billig",
-        "cheapest_hour": "Billigste time",
-        "cheapest_hours": "Billigste timer",
-        "cheap_time": "Billig time",
-        "most_expensive_hour": "Dyreste time",
-        "most_expensive_hours": "Dyreste timer",
-        "normal": "Normal",
-        "expensive": "Dyrt",
-    },
-    "fi": {
-        "unavailable": "Ei saatavilla",
-        "cheap": "Edullinen",
-        "cheapest_hour": "Halvin tunti",
-        "cheapest_hours": "Edullisimmat tunnit",
-        "cheap_time": "Edullinen tunti",
-        "most_expensive_hour": "Kallein tunti",
-        "most_expensive_hours": "Kalleimmat tunnit",
-        "normal": "Normaali",
-        "expensive": "Kallis",
-    },
-    "de": {
-        "unavailable": "Nicht verfügbar",
-        "cheap": "Günstig",
-        "cheapest_hour": "Günstigste Stunde",
-        "cheapest_hours": "Günstigste Stunden",
-        "cheap_time": "Günstige Stunde",
-        "most_expensive_hour": "Teuerste Stunde",
-        "most_expensive_hours": "Teuerste Stunden",
-        "normal": "Normal",
-        "expensive": "Teuer",
-    },
-    "et": {
-        "unavailable": "Pole saadaval",
-        "cheap": "Soodne",
-        "cheapest_hour": "Kõige odavam tund",
-        "cheapest_hours": "Kõige odavamad tunnid",
-        "cheap_time": "Soodne tund",
-        "most_expensive_hour": "Kalleim tund",
-        "most_expensive_hours": "Kalleimad tunnid",
-        "normal": "Tavaline",
-        "expensive": "Kallis",
-    },
-    "lv": {
-        "unavailable": "Nav pieejams",
-        "cheap": "Lēts",
-        "cheapest_hour": "Lētākā stunda",
-        "cheapest_hours": "Lētākās stundas",
-        "cheap_time": "Lēta stunda",
-        "most_expensive_hour": "Dārgākā stunda",
-        "most_expensive_hours": "Dārgākās stundas",
-        "normal": "Parasts",
-        "expensive": "Dārgi",
-    },
-    "lt": {
-        "unavailable": "Nėra prieinama",
-        "cheap": "Pigu",
-        "cheapest_hour": "Pigiausia valanda",
-        "cheapest_hours": "Pigiausios valandos",
-        "cheap_time": "Pigi valanda",
-        "most_expensive_hour": "Brangiausia valanda",
-        "most_expensive_hours": "Brangiausios valandos",
-        "normal": "Normalu",
-        "expensive": "Brangu",
-    },
-    "nl": {
-        "unavailable": "Niet beschikbaar",
-        "cheap": "Goedkoop",
-        "cheapest_hour": "Goedkoopste uur",
-        "cheapest_hours": "Goedkoopste uren",
-        "cheap_time": "Goedkoop uur",
-        "most_expensive_hour": "Duurste uur",
-        "most_expensive_hours": "Duurste uren",
-        "normal": "Normaal",
-        "expensive": "Duur",
-    },
-    "pl": {
-        "unavailable": "Niedostępne",
-        "cheap": "Tanie",
-        "cheapest_hour": "Najtańsza godzina",
-        "cheapest_hours": "Najtańsze godziny",
-        "cheap_time": "Tania godzina",
-        "most_expensive_hour": "Najdroższa godzina",
-        "most_expensive_hours": "Najdroższe godziny",
-        "normal": "Normalna",
-        "expensive": "Drogie",
-    },
-}
-
+_CURRENCY_UNIT_MAP = CURRENCY_UNIT_MAP
 
 # ---------------------------
 # Helpers (Power Price)
@@ -483,6 +359,8 @@ class PowerPriceLevelSensor(SensorEntity):
 
         self._state: Optional[str] = None
         self._attrs: dict[str, Any] = {}
+        self._labels: dict[str, str] = {}
+        self._labels_lang: str | None = None
 
         # Auto-discover the PowerPriceSensor from the same entry via entity registry unique_id
         self._power_price_unique_id = f"{entry.entry_id}_power_price"
@@ -552,14 +430,18 @@ class PowerPriceLevelSensor(SensorEntity):
         nighthourstart = int(cfg.get(CONF_NIGHT_HOUR_START, DEFAULT_NIGHT_HOUR_START))
         eveninghourend = 24
 
-        # localization: accept either stored code ('en') or older display name ('English')
-        sel = str(cfg.get(CONF_LEVEL_LANGUAGE, DEFAULT_LEVEL_LANGUAGE))
-        if sel in LANGUAGE_DISPLAY_MAP:
-            # stored a display name, map to code
-            lang = LANGUAGE_DISPLAY_MAP.get(sel, DEFAULT_LEVEL_LANGUAGE)
-        else:
-            lang = sel
-        labels = _LEVEL_LABELS.get(lang, _LEVEL_LABELS[DEFAULT_LEVEL_LANGUAGE])
+        # labels are loaded from translation files in `async_update`
+        labels = self._labels or {
+            "unavailable": "Unavailable",
+            "cheap": "Cheap",
+            "cheapest_hour": "Cheapest hour",
+            "cheapest_hours": "Cheapest hours",
+            "cheap_time": "Cheap time",
+            "most_expensive_hour": "Most expensive hour",
+            "most_expensive_hours": "Most expensive hours",
+            "normal": "Normal",
+            "expensive": "Expensive",
+        }
 
         if not isinstance(day_prices, list) or len(day_prices) < 24:
             return labels["unavailable"]
@@ -582,7 +464,6 @@ class PowerPriceLevelSensor(SensorEntity):
             return labels["unavailable"]
         averageprice = sum(vals_for_avg) / len(vals_for_avg)
 
-        # --- Build strings like template does ---
         # take the lowest `cheaphours` values (starting at index 0)
         cheapesthours_str = "[ " + ", ".join(
             str(day24_sorted[i]) for i in range(min(max(0, cheaphours), len(day24_sorted)))
@@ -681,11 +562,79 @@ class PowerPriceLevelSensor(SensorEntity):
         # Options override data
         cfg = self._entry.options or self._entry.data
 
+        # Load localized labels from translation files (with English fallback)
+        sel = str(cfg.get(CONF_LEVEL_LANGUAGE, DEFAULT_LEVEL_LANGUAGE))
+        if sel in LANGUAGE_DISPLAY_MAP:
+            lang = LANGUAGE_DISPLAY_MAP.get(sel, DEFAULT_LEVEL_LANGUAGE)
+        else:
+            lang = sel
+
+        # Only reload translations when the requested language changes
+        if self._labels_lang != lang:
+            labels = {}
+            try:
+                # Prefer reading local translation files directly (robust at startup)
+                from pathlib import Path
+                import json
+
+                translations_dir = Path(__file__).resolve().parent / "translations"
+
+                # Build candidate language codes
+                candidates = []
+                if lang:
+                    candidates.append(lang)
+                    if "-" in lang:
+                        candidates.append(lang.split("-", 1)[0])
+                    if "_" in lang:
+                        candidates.append(lang.split("_", 1)[0])
+                candidates.append("en")
+
+                tried = []
+                for cand in [] if candidates is None else candidates:
+                    if not cand:
+                        continue
+                    cand = cand.lower()
+                    if cand in tried:
+                        continue
+                    tried.append(cand)
+                    p = translations_dir / f"{cand}.json"
+                    if p.exists():
+                        try:
+                            def _read_json(path):
+                                with path.open("r", encoding="utf-8") as fh:
+                                    return json.load(fh)
+
+                            translations = await self.hass.async_add_executor_job(_read_json, p)
+                            labels = translations.get("sensor", {}).get("power_price_level", {}).get("state", {}) or {}
+                            if labels:
+                                break
+                        except Exception:
+                            pass
+
+                # Fallback to HA helper if nothing loaded from files
+                if not labels:
+                    try:
+                        translations = await translation_helper.async_get_translations(self.hass, DOMAIN, lang)
+                        labels = translations.get("sensor", {}).get("power_price_level", {}).get("state", {}) or {}
+                        if not labels:
+                            en_trans = await translation_helper.async_get_translations(self.hass, DOMAIN, "en")
+                            labels = en_trans.get("sensor", {}).get("power_price_level", {}).get("state", {}) or {}
+                    except Exception:
+                        labels = {}
+
+            except Exception:
+                labels = {}
+
+            # Only cache when we actually found translations so we retry later if not
+            if labels:
+                self._labels = labels
+                self._labels_lang = lang
+
         if not self._power_price_entity_id:
             self._power_price_entity_id = self._resolve_power_price_entity_id()
 
         if not self._power_price_entity_id:
-            self._state = "Utilgjengelig"
+            self._state = self._labels.get("unavailable", "Unavailable")
             self._attrs = {
                 "debug_source": "custom_components.power_price_level",
                 "reason": "no_power_price_entity",
@@ -694,7 +643,7 @@ class PowerPriceLevelSensor(SensorEntity):
 
         power_price_state = self.hass.states.get(self._power_price_entity_id)
         if not power_price_state:
-            self._state = "Utilgjengelig"
+            self._state = self._labels.get("unavailable", "Unavailable")
             self._attrs = {
                 "debug_source": "custom_components.power_price_level",
                 "reason": "power_price_missing",
@@ -703,7 +652,7 @@ class PowerPriceLevelSensor(SensorEntity):
 
         powerprice = power_price_state.attributes.get("prices")
         if not powerprice:
-            self._state = "Utilgjengelig"
+            self._state = self._labels.get("unavailable", "Unavailable")
             self._attrs = {
                 "debug_source": "custom_components.power_price_level",
                 "reason": "no_prices_attribute",
