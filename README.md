@@ -12,6 +12,9 @@ The sensor is designed to assist the user moving the highest power consumption l
 ### Table of Contents
 **[Installation](#installation)**<br>
 **[Setup](#setup)**<br>
+**[How the sensors works](#how-the-sensors-works)**<br>
+
+
 
 
 ## Installation
@@ -72,10 +75,10 @@ Its state always reflects the price level for the current hour. When Nordpool pr
 
 This sensor is designed to ensure that a minimum number of cheap-price hours occur within a day. All calculations are based solely on the prices for the current day (current day or the next day, once available). Prices from other days are not considered. As a result, an hour marked as “Cheapest” on one day may still be more expensive than an hour marked as “Most expensive” on another day.
 
-Available price levels are:
+#### Available price levels are:
 | Value                  | Description |
 |------------------------| ----------- | 
-| Cheap                  | If the price is below the Cheap price thershold |
+| Cheap                  | If the power price is below the Cheap price thershold |
 | Cheapest hour          | Cheapest hour of the day |
 | Cheapest hours         | X number Cheapest hours of the day |
 | Cheap hour             | X number Cheapest hours of a period |
@@ -84,5 +87,26 @@ Available price levels are:
 | Most Expensive hours   | X number Most Expensive hours of the day  |
 | Most Expensive hour    | Most Expensive hour of the day |
 
+#### Currency supported:
+| Currency               | Description |
+|------------------------| ----------- | 
+| NOK                    | Norvergian Krone |
+| SEK                    | Swedish Krone |
+| DKK                    | Danish Krone |
+| EURO                   | Euro |
 
+#### Languages supported:
+| Language               
+|------------------------|
+| English |                    
+| Danish | 
+| German | 
+| Estonian | 
+| Latvian | 
+| Lithuanian | 
+| Dutch | 
+| Norwegian | 
+| Polish | 
+| Finnish | 
+| Swedish | 
 
