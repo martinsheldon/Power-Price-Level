@@ -413,7 +413,7 @@ class PowerPriceLevelSensor(SensorEntity):
             self._unsub()
             self._unsub = None
 
-    def _get_pricelevel(self, hour: int, day_prices: list[Optional[float]], cfg: dict[str, Any]) -> str:
+    def _get_pricelevel(self, hour: int, day_prices: list[Optional[float]], cfg: dict[str, Any], labels_override: dict[str, str] | None = None) -> str:
         # Wizard/Options values
         cheap_price_ore = float(cfg.get(CONF_CHEAP_PRICE, 0.0))
         nighthourend = int(cfg.get(CONF_NIGHT_HOUR_END, 0))
@@ -431,24 +431,15 @@ class PowerPriceLevelSensor(SensorEntity):
         eveninghourend = 24
 
         # labels are loaded from translation files in `async_update`
-        labels = self._labels or {
-            "unavailable": "Unavailable",
-            "cheap": "Cheap",
-            "cheapest_hour": "Cheapest hour",
-            "cheapest_hours": "Cheapest hours",
-            "cheap_time": "Cheap time",
-            "most_expensive_hour": "Most expensive hour",
-            "most_expensive_hours": "Most expensive hours",
-            "normal": "Normal",
-            "expensive": "Expensive",
-        }
+        # Do not fall back to built-in labels; require translations to provide them.
+        labels = labels_override or self._labels or {}
 
         if not isinstance(day_prices, list) or len(day_prices) < 24:
-            return labels["unavailable"]
+            return labels.get("unavailable")
 
         p = day_prices[hour]
         if p is None:
-            return labels["unavailable"]
+            return labels.get("unavailable")
         pricethishour = float(p)
 
         # Match template: sort the full 0:24 list (including any None)
@@ -461,7 +452,7 @@ class PowerPriceLevelSensor(SensorEntity):
 
         vals_for_avg = [v for v in day24 if v is not None]
         if not vals_for_avg:
-            return labels["unavailable"]
+            return labels.get("unavailable")
         averageprice = sum(vals_for_avg) / len(vals_for_avg)
 
         # take the lowest `cheaphours` values (starting at index 0)
@@ -507,10 +498,10 @@ class PowerPriceLevelSensor(SensorEntity):
         # Original decision order (template): cheap_price -> cheapest_hour ->
         # cheapest_hours -> per-period cheapest -> most-expensive -> normal/expensive
         if cheapprice > 0 and pricethishour <= cheapprice:
-            return labels["cheap"]
+            return labels.get("cheap")
 
         if cheapest_key is not None and p_key == cheapest_key:
-            return labels["cheapest_hour"]
+            return labels.get("cheapest_hour")
 
         # Build lists of keys for requested counts.
         # Exclude the absolute cheapest/most-expensive so these grouped lists
@@ -526,7 +517,7 @@ class PowerPriceLevelSensor(SensorEntity):
         mostexpensive_keys = [ _k(day24_sorted_desc[i]) for i in range(start_index_exp, end_index_exp) if day24_sorted_desc[i] is not None ]
 
         if p_key in cheapest_keys:
-            return labels["cheapest_hours"]
+            return labels.get("cheapest_hours")
 
         # Per-period cheapest sets (for night/day/evening slices) — no supplementation
         cheapest_night_keys = [ _k(night_slice[i]) for i in range(min(max(0, cheaphoursnight), len(night_slice))) if night_slice[i] is not None ]
@@ -545,18 +536,18 @@ class PowerPriceLevelSensor(SensorEntity):
             or (p_key in cheapest_night_keys and in_night)
             or (p_key in cheapest_evening_keys and in_evening)
         ):
-            return labels["cheap_time"]
+            return labels.get("cheap_time")
 
         # If this hour is one of the most expensive, prefer that label now
         if mostexpensive_key is not None and p_key == mostexpensive_key:
-            return labels["most_expensive_hour"]
+            return labels.get("most_expensive_hour")
         if p_key in mostexpensive_keys:
-            return labels["most_expensive_hours"]
+            return labels.get("most_expensive_hours")
         if pricethishour <= averageprice:
-            return labels["normal"]
+            return labels.get("normal")
         if pricethishour > averageprice:
-            return labels["expensive"]
-        return labels["unavailable"]
+            return labels.get("expensive")
+        return labels.get("unavailable")
 
     async def async_update(self) -> None:
         # Options override data
@@ -634,7 +625,7 @@ class PowerPriceLevelSensor(SensorEntity):
             self._power_price_entity_id = self._resolve_power_price_entity_id()
 
         if not self._power_price_entity_id:
-            self._state = self._labels.get("unavailable", "Unavailable")
+            self._state = (self._labels or {}).get("unavailable")
             self._attrs = {
                 "debug_source": "custom_components.power_price_level",
                 "reason": "no_power_price_entity",
@@ -643,7 +634,7 @@ class PowerPriceLevelSensor(SensorEntity):
 
         power_price_state = self.hass.states.get(self._power_price_entity_id)
         if not power_price_state:
-            self._state = self._labels.get("unavailable", "Unavailable")
+            self._state = (self._labels or {}).get("unavailable")
             self._attrs = {
                 "debug_source": "custom_components.power_price_level",
                 "reason": "power_price_missing",
@@ -665,6 +656,26 @@ class PowerPriceLevelSensor(SensorEntity):
         hour = dt_util.now().hour
 
         self._state = self._get_pricelevel(hour, today, cfg)
+        # Build English-only labels/prices by reading local translations/en.json only
+        en_labels: dict[str, str] = {}
+        try:
+            from pathlib import Path
+            import json
+
+            translations_dir = Path(__file__).resolve().parent / "translations"
+            p = translations_dir / "en.json"
+            if p.exists():
+                def _read_json(path):
+                    with path.open("r", encoding="utf-8") as fh:
+                        return json.load(fh)
+
+                translations = await self.hass.async_add_executor_job(_read_json, p)
+                en_labels = translations.get("sensor", {}).get("power_price_level", {}).get("state", {}) or {}
+        except Exception:
+            en_labels = {}
+
+        en_prices_today = [self._get_pricelevel(h, today, cfg, labels_override=en_labels) for h in range(24)]
+        en_prices_tomorrow = [self._get_pricelevel(h, tomorrow, cfg, labels_override=en_labels) for h in range(24)] if tomorrow else []
 
         self._attrs = {
             "source_entity": self._power_price_entity_id,
@@ -681,5 +692,9 @@ class PowerPriceLevelSensor(SensorEntity):
             "prices": {
                 "today": [self._get_pricelevel(h, today, cfg) for h in range(24)],
                 "tomorrow": [self._get_pricelevel(h, tomorrow, cfg) for h in range(24)] if tomorrow else [],
+            },
+            "en_prices": {
+                "today": en_prices_today,
+                "tomorrow": en_prices_tomorrow,
             },
         }

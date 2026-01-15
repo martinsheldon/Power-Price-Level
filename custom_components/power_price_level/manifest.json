@@ -1,7 +1,7 @@
 {
   "domain": "power_price_level",
   "name": "Power Price Level",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "documentation": "https://github.com/martinsheldon/power_price_level",
   "issue_tracker": "https://github.com/martinsheldon/power_price_level/issues",
   "codeowners": ["@martinsheldon"],
