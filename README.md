@@ -1,5 +1,20 @@
-# Power Price Level custom integration for Home Assistant
-Home Assistant Power Price Level sensor using Nordpool price data
+<p align="center">
+  <img
+    width="256"
+    height="256"
+    src="https://github.com/user-attachments/assets/8fe481b4-3760-4179-a998-a8b525dc206a"
+    alt="icon"
+  />
+</p>
+
+<h1 align="center">
+  Power Price Level custom integration for Home Assistant
+</h1>
+
+<p align="left">
+  Home Assistant Power Price Level sensor using Nordpool price data
+</p>
+
 
 
 ## What is Power Price Level?
