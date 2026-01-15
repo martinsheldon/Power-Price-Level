@@ -36,8 +36,8 @@ It is a simple sensor that calculates the cheapest and most expensive hour of ea
 
 ### HACS
 
-- Go to `HACS` -> `Integrations`,
-- Select `+`,
+- Go to `HACS`
+- Add this repo as custom repository, select type `Integration`
 - Search for `Power Price Level` and install it,
 - Restart Home Assistant
 
