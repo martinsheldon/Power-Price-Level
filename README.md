@@ -13,7 +13,7 @@ The sensor is designed to assist the user moving the highest power consumption l
 **[Installation](#installation)**<br>
 **[Setup](#setup)**<br>
 **[How the sensors works](#how-the-sensors-works)**<br>
-
+**[Power Price visual presentation](#power-price-visual-presentation)**<br>
 
 
 
@@ -110,3 +110,17 @@ This sensor is designed to ensure that a minimum number of cheap-price hours occ
 | Finnish | 
 | Swedish | 
 
+### Examples:
+#### Power Price
+<img width="727" height="705" alt="image" src="https://github.com/user-attachments/assets/5c5642f4-1adf-4ead-ae47-a8c460f82afa" />
+
+#### Power Price Level
+<img width="713" height="800" alt="image" src="https://github.com/user-attachments/assets/b33b03fd-9d0f-41ae-a1a9-7635c1c75998" />
+
+## Power Price visual presentation
+[ApexCharts](https://github.com/RomRider/apexcharts-card) card is recommended for visualization of the price and price level data in Home Assistant.<br> 
+
+#### Prices for today:
+<img width="579" height="417" alt="image" src="https://github.com/user-attachments/assets/89ec2b06-808e-4dee-881f-3839824a5bea" />
+
+#### Prices for two days:
