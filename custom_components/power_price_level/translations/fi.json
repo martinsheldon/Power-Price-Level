@@ -131,6 +131,8 @@
         },
         "data": {
           "night_hour_end": "Yö päättyy klo (tunti)",
+          "grid_night_start": "Verkon yö alkaa klo (tunti)",
+          "grid_night_end": "Verkon yö päättyy klo (tunti)",
           "day_hour_end": "Päivä päättyy klo (tunti)",
           "cheap_hours": "Halvimmat tunnit",
           "expensive_hours": "Kalleimmat tunnit",

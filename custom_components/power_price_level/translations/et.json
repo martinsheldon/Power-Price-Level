@@ -131,6 +131,8 @@
         },
         "data": {
           "night_hour_end": "Öö lõpeb kell (tund)",
+          "grid_night_start": "Öö algab kell (tund)",
+          "grid_night_end": "Öö lõpeb kell (tund)",
           "day_hour_end": "Päev lõpeb kell (tund)",
           "cheap_hours": "Kõige soodsamad tunnid",
           "expensive_hours": "Kõige kallimad tunnid",

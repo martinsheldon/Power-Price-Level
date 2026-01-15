@@ -131,6 +131,8 @@
         },
         "data": {
           "night_hour_end": "Naktis baigiasi val. (valanda)",
+          "grid_night_start": "Tinklo naktis prasideda val. (valanda)",
+          "grid_night_end": "Tinklo naktis baigiasi val. (valanda)",
           "day_hour_end": "Diena baigiasi val. (valanda)",
           "cheap_hours": "Pigiausios valandos",
           "expensive_hours": "Brangiausios valandos",

@@ -91,6 +91,8 @@
           "level_language_nb": "Norsk (Bokmål)",
           "grid_day": "Nettleie dagpris",
           "grid_night": "Nettleie nattpris",
+          "grid_night_start": "Nettleie natt starter kl. (time)",
+          "grid_night_end": "Nettleie natt slutter kl. (time)",
           "additional": "Tillegg",
           "cheap_price": "Terskel for billig pris",
           "night_hour_end": "Natten slutter kl. (time)",
@@ -107,6 +109,8 @@
         "data": {
           "grid_day": "Nettleie dagpris",
           "grid_night": "Nettleie nattpris",
+          "grid_night_start": "Nettleie natt starter kl. (time)",
+          "grid_night_end": "Nettleie natt slutter kl. (time)",
           "additional": "Tillegg",
           "cheap_price": "Terskel for billig pris"
         }
@@ -124,6 +128,8 @@
         "data": {
           "night_hour_start": "Natten starter kl. (time)",
           "night_hour_end": "Natten slutter kl. (time)",
+          "grid_night_start": "Nettleie natt starter kl. (time)",
+          "grid_night_end": "Nettleie natt slutter kl. (time)",
           "day_hour_end": "Dagen slutter kl. (time)",
           "cheap_hours": "Antall billigste timer",
           "expensive_hours": "Antall dyreste timer",
