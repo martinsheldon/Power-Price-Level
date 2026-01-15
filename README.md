@@ -109,7 +109,7 @@ This sensor is designed to ensure that a minimum number of low-price hours occur
 | NOK                    | Norvergian Krone |
 | SEK                    | Swedish Krone |
 | DKK                    | Danish Krone |
-| EURO                   | Euro |
+| EUR                    | Euro |
 
 #### Languages supported:
 | Language               
