@@ -9,6 +9,8 @@ The Power Price Level sensor can be configured and tuned to fit the need of your
 Its a simple sensor calculating the cheapest and most expensive hour each day and cheapest hours within defined periods (Up to three periods) of the day.
 The sensor is designed to assist the user moving the highest power consumption like Hot Water heating to the cheapest hours of the day to reduce the electricity bill.
 
+<img width="579" height="417" alt="image" src="https://github.com/user-attachments/assets/89ec2b06-808e-4dee-881f-3839824a5bea" />
+
 ### Table of Contents
 **[Installation](#installation)**<br>
 **[Setup](#setup)**<br>
