@@ -3,13 +3,11 @@ Home Assistant Power Price Level sensor using Nordpool price data
 
 
 ## What is Power Price Level?
-Power Price Level is a custom integration in Home Assistant that creates two configurable sensors presenting the current Power Price and relative Power Price Level for the current and next day based on data from Nordpool and user input.
-The Power Price Level sensor can be configured and tuned to fit the need of your home.
+Power Price Level is a custom integration for Home Assistant that creates two configurable sensors. These sensors present the current power price and the relative power price level for both the current day and the next day, based on data from Nordpool and user-defined settings. The Power Price Level sensor can be configured and fine-tuned to suit the specific needs of your home.
 
-Its a simple sensor calculating the cheapest and most expensive hour each day and cheapest hours within defined periods (Up to three periods) of the day.
-The sensor is designed to assist the user moving the highest power consumption like Hot Water heating to the cheapest hours of the day to reduce the electricity bill.
+It is a simple sensor that calculates the cheapest and most expensive hour of each day, as well as the cheapest hours (optional) within three user-defined periods of the day. The sensor is designed to help users shift high power consumption—such as hot water heating—to the cheapest hours of the day, thereby reducing electricity costs.
 
-<img width="579" height="417" alt="image" src="https://github.com/user-attachments/assets/89ec2b06-808e-4dee-881f-3839824a5bea" />
+<img width="441" height="317" alt="image" src="https://github.com/user-attachments/assets/cc0cc828-9466-4900-b35d-23d8241510df" />
 
 ### Table of Contents
 **[Installation](#installation)**<br>
@@ -64,18 +62,15 @@ The sensor is designed to assist the user moving the highest power consumption l
 ## How the sensors works
 ###  Power Price:
 
-The Power Price sensor calculates and stores the actual hourly prices as attributes, based on the Nordpool price, the day or night grid price, and the fixed additional price. 
-Its state always reflects the price for the current hour.
+The Power Price sensor calculates and stores the actual hourly prices as attributes. These prices are based on the Nordpool price, the day or night grid price, and a fixed additional price. The sensor state always reflects the price for the current hour.
 
-All hourly values are provided both as lists and as raw values within the sensor attributes. 
-When Nordpool makes prices for the next day available, the sensor automatically calculates and stores the corresponding hourly prices.
+All hourly values are available both as lists and as individual raw values within the sensor attributes. When Nordpool publishes prices for the next day, the sensor automatically calculates and stores the corresponding hourly prices.
 
 ###  Power Price Level:
 
-The Power Price Level sensor uses data from the Power Price sensor together with user‑defined settings to calculate and store the relative price levels for each day. These values are stored as lists.
-Its state always reflects the price level for the current hour. When Nordpool provides prices for the next day, the sensor immediately calculates the corresponding price levels as well.
+The Power Price Level sensor uses data from the Power Price sensor together with user-defined settings to calculate and store relative price levels for each day. These values are stored as lists. The sensor state always reflects the price level for the current hour. When Nordpool publishes prices for the next day, the sensor immediately calculates the corresponding price levels as well.
 
-This sensor is designed to ensure that a minimum number of cheap-price hours occur within a day. All calculations are based solely on the prices for the current day (current day or the next day, once available). Prices from other days are not considered. As a result, an hour marked as “Cheapest” on one day may still be more expensive than an hour marked as “Most expensive” on another day.
+This sensor is designed to ensure that a minimum number of low-price hours occur within a day. All calculations are based solely on prices for the same day (either the current day or the next day, once available). Prices from other days are not taken into account. As a result, an hour marked as “Cheapest” on one day may still be more expensive than an hour marked as “Most expensive” on another day.
 
 #### Available price levels are:
 | Value                  | Description |
@@ -100,29 +95,31 @@ This sensor is designed to ensure that a minimum number of cheap-price hours occ
 #### Languages supported:
 | Language               
 |------------------------|
-| English |                    
-| Danish | 
-| German | 
-| Estonian | 
-| Latvian | 
-| Lithuanian | 
-| Dutch | 
-| Norwegian | 
-| Polish | 
-| Finnish | 
-| Swedish | 
+| Danish |
+| Dutch |
+| English |
+| Estonian |
+| Finnish |
+| German |
+| Latvian |
+| Lithuanian |
+| Norwegian |
+| Polish |
+| Swedish |
 
 ### Examples:
 #### Power Price
-<img width="727" height="705" alt="image" src="https://github.com/user-attachments/assets/5c5642f4-1adf-4ead-ae47-a8c460f82afa" />
+<img width="440" height="427" alt="image" src="https://github.com/user-attachments/assets/5c5642f4-1adf-4ead-ae47-a8c460f82afa" />
 
 #### Power Price Level
-<img width="713" height="800" alt="image" src="https://github.com/user-attachments/assets/b33b03fd-9d0f-41ae-a1a9-7635c1c75998" />
+<img width="440" height="493" alt="image" src="https://github.com/user-attachments/assets/b33b03fd-9d0f-41ae-a1a9-7635c1c75998" />
 
 ## Power Price visual presentation
 [ApexCharts](https://github.com/RomRider/apexcharts-card) card is recommended for visualization of the price and price level data in Home Assistant.<br> 
 
 #### Prices for today:
-<img width="579" height="417" alt="image" src="https://github.com/user-attachments/assets/89ec2b06-808e-4dee-881f-3839824a5bea" />
+<img width="441" height="317" alt="image" src="https://github.com/user-attachments/assets/cc0cc828-9466-4900-b35d-23d8241510df" />
 
 #### Prices for two days:
+<img width="442" height="321" alt="image" src="https://github.com/user-attachments/assets/f7799c87-5536-4183-bb90-bcbb5a5501b3" />
+
