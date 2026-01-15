@@ -34,6 +34,10 @@ It is a simple sensor that calculates the cheapest and most expensive hour of ea
 
 ## Installation
 
+### IMPORTANT: NORDPOOL CUSTOM COMPONENT REQUIRED FOR THIS CUSTOM INTEGRATION TO WORK! 
+[Nordpool custom integration](https://github.com/custom-components/nordpool)
+
+
 ### HACS
 
 - Go to `HACS`
