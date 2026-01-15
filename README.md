@@ -117,6 +117,9 @@ This sensor is designed to ensure that a minimum number of low-price hours occur
 ## Power Price visual presentation
 [ApexCharts](https://github.com/RomRider/apexcharts-card) card is recommended for visualization of the price and price level data in Home Assistant.<br> 
 
+Examples for how to use the ApexCharts card with this sensor can be found here:  
+[ApexCharts examples](https://github.com/martinsheldon/Power-Price-Level/tree/main/apexcharts)
+
 #### Prices for today:
 <img width="441" height="317" alt="image" src="https://github.com/user-attachments/assets/cc0cc828-9466-4900-b35d-23d8241510df" />
 
