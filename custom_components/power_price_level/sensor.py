@@ -276,34 +276,42 @@ class PowerPriceSensor(SensorEntity):
         grid_night = round(float(cfg.get(CONF_GRID_NIGHT, self._cfg.grid_night_ore)), 4)
         additional = round(float(cfg.get(CONF_ADDITIONAL, self._cfg.additional_ore)), 4)
 
-        # NOTE: matches your earlier template behavior: spot + grid_day in state
+        # Build hourly prices and apply grid/day or grid/night adders using the
+        # grid-specific night window (`CONF_GRID_NIGHT_START/END`). The current
+        # state (`native_value`) must reflect spot + appropriate grid adder for
+        # the current hour.
         today_hourly = _quarterhour_to_hourly(today_q)
         if today_hourly:
             idx = hour % len(today_hourly)
             spot = today_hourly[idx]
-            self._native_value = round(float(spot) + grid_day + additional, 4) if spot is not None else None
+            # determine grid night window for adders
+            grid_nighthourstart = int(cfg.get(CONF_GRID_NIGHT_START, DEFAULT_GRID_NIGHT_START))
+            grid_nighthourend = int(cfg.get(CONF_GRID_NIGHT_END, DEFAULT_GRID_NIGHT_END))
+            if spot is None:
+                self._native_value = None
+            else:
+                # support wrapping night window
+                if grid_nighthourstart < grid_nighthourend:
+                    is_night = grid_nighthourstart <= hour < grid_nighthourend
+                else:
+                    is_night = hour >= grid_nighthourstart or hour < grid_nighthourend
+                add_for_hour = grid_night if is_night else grid_day
+                self._native_value = round(float(spot) + add_for_hour + additional, 4)
         else:
             self._native_value = None
 
         dst_today_23 = len(today_hourly) == 23
-        # Use the generic night window (not the grid-specific one) when building
-        # the `prices` arrays so price-level calculations use the user-configured
-        # night window (CONF_NIGHT_HOUR_START/END). Grid-specific variants
-        # (`CONF_GRID_NIGHT_START/END`) are only for grid-adders display and
-        # should not affect which hours are considered "night" for levels.
-        # Per original template semantics: night ALWAYS starts at 0 for level
-        # calculations (user expectation). Ignore configured grid/night start
-        # here and use 0 as the fixed night start.
-
-        nighthourstart = int(cfg.get(CONF_NIGHT_HOUR_START, DEFAULT_NIGHT_HOUR_START))
-        nighthourend = int(cfg.get(CONF_NIGHT_HOUR_END, DEFAULT_NIGHT_HOUR_END))
-        prices_today = _build_24_prices(today_hourly, grid_day, grid_night, nighthourstart, nighthourend, dst_today_23, additional)
+        # Use the grid-specific night window when building the `prices` arrays so
+        # the displayed per-hour prices include the correct grid adders.
+        grid_nighthourstart = int(cfg.get(CONF_GRID_NIGHT_START, DEFAULT_GRID_NIGHT_START))
+        grid_nighthourend = int(cfg.get(CONF_GRID_NIGHT_END, DEFAULT_GRID_NIGHT_END))
+        prices_today = _build_24_prices(today_hourly, grid_day, grid_night, grid_nighthourstart, grid_nighthourend, dst_today_23, additional)
 
         prices_tomorrow: list[Optional[float]] = []
         if tomorrow_q:
             tomorrow_hourly = _quarterhour_to_hourly(tomorrow_q)
             dst_tomorrow_23 = len(tomorrow_hourly) == 23
-            prices_tomorrow = _build_24_prices(tomorrow_hourly, grid_day, grid_night, nighthourstart, nighthourend, dst_tomorrow_23, additional)
+            prices_tomorrow = _build_24_prices(tomorrow_hourly, grid_day, grid_night, grid_nighthourstart, grid_nighthourend, dst_tomorrow_23, additional)
 
         # ---- raw_today / raw_tomorrow (Nordpool-like) ----
         start_today = dt_util.start_of_local_day(dt_util.now())
@@ -428,7 +436,10 @@ class PowerPriceLevelSensor(SensorEntity):
         # Cheap price threshold (main currency unit)
         cheapprice = cheap_price_ore
 
-        nighthourstart = int(cfg.get(CONF_NIGHT_HOUR_START, DEFAULT_NIGHT_HOUR_START))
+        # For level/period calculations, night is defined to start at 0
+        # (00:00). The configured `CONF_NIGHT_HOUR_START` controls grid adders
+        # only; level periods use fixed start=0, end=`CONF_NIGHT_HOUR_END`.
+        nighthourstart = 0
         eveninghourend = 24
 
         # labels are loaded from translation files in `async_update`
