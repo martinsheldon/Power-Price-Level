@@ -93,6 +93,8 @@
           "currency_NOK": "Norska kronan",
           "grid_day": "Nät dagpris",
           "grid_night": "Nät nattpris",
+          "grid_night_start": "Nätets natt börjar kl. (timme)",
+          "grid_night_end": "Nätets natt slutar kl. (timme)",
           "additional": "Tillägg",
           "cheap_price": "Gräns för billig pris",
           "night_hour_end": "Natten slutar kl. (timme)",
@@ -109,6 +111,8 @@
         "data": {
           "grid_day": "Nät dagpris",
           "grid_night": "Nät nattpris",
+          "grid_night_start": "Nätets natt börjar kl. (timme)",
+          "grid_night_end": "Nätets natt slutar kl. (timme)",
           "additional": "Tillägg",
           "cheap_price": "Gräns för billig pris",
           "night_hour_start": "Natten börjar kl. (timme)",
@@ -127,6 +131,8 @@
         },
         "data": {
           "night_hour_end": "Natten slutar kl. (timme)",
+          "grid_night_start": "Nätets natt börjar kl. (timme)",
+          "grid_night_end": "Nätets natt slutar kl. (timme)",
           "day_hour_end": "Dagen slutar kl. (timme)",
           "cheap_hours": "Antal billigaste timmar",
           "expensive_hours": "Antal dyraste timmar",

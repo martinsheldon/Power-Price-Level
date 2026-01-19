@@ -1,0 +1,86 @@
+type: custom:apexcharts-card
+hours_12: false
+header:
+  title: Prices tomorrow
+  show: true
+  show_states: true
+now:
+  show: true
+  color: "#ffffff"
+  label: Now
+graph_span: 24h
+span:
+  start: day
+  offset: +1d
+series:
+  - entity: sensor.power_price
+    name: " "
+    type: column
+    show:
+      legend_value: false
+      in_header: false
+    data_generator: |
+      const COLORS={
+        lowest:'#007f3b',
+        next5low:'#33a36b',
+        brightGreen:'#00e676',
+        highest:'#c62828',
+        next5high:'#ef5350',
+        yellow:'#ffff00',
+        amber:'#ff9000'
+      };
+      const LEVEL_COLORS={
+        'Cheap':COLORS.lowest,
+        'Cheap time':COLORS.brightGreen,
+        'Cheapest hour':COLORS.lowest,
+        'Cheapest hours':COLORS.next5low,
+        'Normal':COLORS.yellow,
+        'Expensive':COLORS.amber,
+        'Most expensive hours':COLORS.next5high,
+        'Most expensive hour':COLORS.highest
+      };
+      const MID = 30*60*1000;  // <-- same time adjustment as first code
+      const byHour={}; (entity.attributes.raw_tomorrow || []).forEach(e => {
+        if (!e || !e.start) return;
+        const d = new Date(e.start);
+        d.setMinutes(0,0,0);
+        const k = d.getTime();
+        if (!byHour[k]) byHour[k] = [];
+        byHour[k].push(Number(e.value));
+      });
+      let data = Object.keys(byHour)
+        .sort()
+        .map(k => {
+          const vals = byHour[k];
+          let s = 0;
+          for (let i=0; i<vals.length; i++) s += vals[i];
+          const avg = vals.length ? (s / vals.length) : 0;
+          const base = Number(k);
+          return {
+            x: new Date(base + MID),  // <-- adjusted to center the hour
+            y: avg,
+            ts: base,
+            h: new Date(base).getHours()
+          };
+        });
+
+      if (!data.length) return [];
+      const lvlEnt = (typeof hass !== 'undefined' && hass.states)
+          ? hass.states['sensor.power_price_level']
+          : null;
+
+      const levels = (
+          lvlEnt &&
+          lvlEnt.attributes &&
+          lvlEnt.attributes.en_prices &&
+          Array.isArray(lvlEnt.attributes.prices.tomorrow)
+        ) ? lvlEnt.attributes.en_prices.tomorrow : [];
+
+      data = data.map(p => {
+        const label = (levels[p.h] !== undefined && levels[p.h] !== null)
+            ? String(levels[p.h]).trim()
+            : '';
+        const color = LEVEL_COLORS[label] || COLORS.yellow;
+        return { x: p.x, y: p.y, fillColor: color };
+      });
+      return data;

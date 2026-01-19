@@ -95,6 +95,8 @@
           "currency_NOK": "Norwegische Krone",
           "grid_day": "Netz Tagespreis",
           "grid_night": "Netz Nachtpreis",
+          "grid_night_start": "Nacht (Netz) beginnt um (Stunde)",
+          "grid_night_end": "Nacht (Netz) endet um (Stunde)",
           "additional": "Zusatzgebühr",
           "cheap_price": "Schwelle für günstigen Preis",
           "night_hour_end": "Nacht endet um (Stunde)",
@@ -111,6 +113,8 @@
         "data": {
           "grid_day": "Netz Tagespreis",
           "grid_night": "Netz Nachtpreis",
+          "grid_night_start": "Nacht (Netz) beginnt um (Stunde)",
+          "grid_night_end": "Nacht (Netz) endet um (Stunde)",
           "additional": "Zusatzgebühr",
           "cheap_price": "Schwelle für günstigen Preis",
           "night_hour_start": "Nacht beginnt um (Stunde)",
@@ -129,6 +133,8 @@
         },
         "data": {
           "night_hour_end": "Nacht endet um (Stunde)",
+          "grid_night_start": "Nacht (Netz) beginnt um (Stunde)",
+          "grid_night_end": "Nacht (Netz) endet um (Stunde)",
           "day_hour_end": "Tag endet um (Stunde)",
           "cheap_hours": "Anzahl der günstigsten Stunden",
           "expensive_hours": "Anzahl der teuersten Stunden",
